@@ -1,0 +1,20 @@
+{
+   "name": "App  Assets Export",
+  "description": "Export App property's all assets to XCode Images.xcassets and Android res folder, and commit git repo.",
+  "author": "Andrew Huang",
+  "homepage": "https://github.com/work4blue/app-assets-export",
+  "version": "1.0.0",
+  "identifier": "cn.bluedrum.sketch-app-aasset-export",
+  "compatibleVersion": "1.0.0",
+  "bundleVersion": 1,
+
+    "commands" : [
+    {
+      "script" : "handler.js",
+     "handler" : "onRun",
+      "shortcut" : "",
+       "name" : "Export AppIcon's",
+      "identifier" : "cn.bluedrum.export-appicon"
+    }
+  ]
+}
