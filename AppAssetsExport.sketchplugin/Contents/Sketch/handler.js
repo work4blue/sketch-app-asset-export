@@ -1,3 +1,15 @@
+@import 'common.js'
+
+var presets = {
+        xcodeProjectPath: '',
+        androidResPath:'',
+        otherPath:'',
+        exportXcode:1,
+        exportAndroid:1,
+        exportOther:1,
+}       
+var userDefaults = initDefaults(presets)
+
 
 
 var onRun = function(context){
@@ -67,9 +79,25 @@ var otherInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,12,300,25));
     alert.setMessageText('App Asset export directory');
     alert.addButtonWithTitle('Save preferences');
     alert.addButtonWithTitle('Cancel');
-   //  alert.setIcon(NSImage.alloc().initWithContentsOfFile(
-   //    context.plugin.urlForResourceNamed('logo.png').path()));
+     alert.setIcon(NSImage.alloc().initWithContentsOfFile(
+      context.plugin.urlForResourceNamed('logo.png').path()));
     alert.setAccessoryView(accessory);
 
     var responseCode = alert.runModal();
+
+
+     if (responseCode === 1000) {
+
+         userDefaults.xcodeProjectPath = xcodeInput.stringValue();
+         userDefaults.androidResPath = androidInput.stringValue();
+         userDefaults.otherPath = otherInput.stringValue();
+
+         //log(@"save input xcode"+xcodeInput.stringValue())
+        saveDefaults(userDefaults)  ;
+
+        //NSApplication.sharedApplication().displayDialog_withTitle_("result", xcodeInput.stringValue);
+    }
+    else {
+       //NSApplication.sharedApplication().displayDialog_withTitle_("result2", androidInput.stringValue);
+    }
 }
