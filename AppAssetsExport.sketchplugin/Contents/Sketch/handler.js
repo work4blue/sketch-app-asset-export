@@ -8,7 +8,7 @@ var presets = {
         exportAndroid:1,
         exportOther:1,
 }       
-var userDefaults = initDefaults(presets)
+var userDefaults = loadDefaults(presets)
 
 
 
@@ -24,7 +24,7 @@ var onRun = function(context){
   var checkboxXCode = NSButton.alloc().initWithFrame(NSMakeRect(0,214,300,25));
     checkboxXCode.setButtonType(3);
     checkboxXCode.title = 'Input XCode Project (xcodeproj) folder';
-  //  checkboxXCode.state =  userDefaults.exportXcode;
+    checkboxXCode.state =  userDefaults.exportXcode;
 
    
  var textXcode = NSTextView.alloc().initWithFrame(NSMakeRect(0,194,300,20));
@@ -34,14 +34,14 @@ var onRun = function(context){
 
 
    var xcodeInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,170,300,25));
-   // xcodeInput.stringValue = userDefaults.xcodeProjectPath;
+    xcodeInput.stringValue = userDefaults.xcodeProjectPath;
     xcodeInput.editable = true;
     xcodeInput.placeholder="Drop you project or workspace file to here"
 
     var checkboxAndroid = NSButton.alloc().initWithFrame(NSMakeRect(0,124,300,25));
     checkboxAndroid.setButtonType(3);
     checkboxAndroid.title = 'Input Android Resource (res) folder';
- //   checkboxAndroid.state = userDefaults.exportAndroid;
+    checkboxAndroid.state = userDefaults.exportAndroid;
 
 
 
@@ -51,17 +51,17 @@ var textAndroid = NSTextView.alloc().initWithFrame(NSMakeRect(0,104,300,20));
     textAndroid.editable = false;
 
    var androidInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,80,300,25));
- //   androidInput.stringValue = userDefaults.androidResPath;
+    androidInput.stringValue = userDefaults.androidResPath;
     androidInput.editable = true;
 
 
       var checkboxOther = NSButton.alloc().initWithFrame(NSMakeRect(0,36,300,25));
     checkboxOther.setButtonType(3);
     checkboxOther.title = 'Input open SDK icon directory';
-  //  checkboxOther.state = userDefaults.exportOther;
+   checkboxOther.state = userDefaults.exportOther;
 
 var otherInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,12,300,25));
-   // otherInput.stringValue = userDefaults.otherPath;
+    otherInput.stringValue = userDefaults.otherPath;
     otherInput.editable = true;
 
 
@@ -93,7 +93,7 @@ var otherInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,12,300,25));
          userDefaults.otherPath = otherInput.stringValue();
 
          //log(@"save input xcode"+xcodeInput.stringValue())
-        saveDefaults(userDefaults)  ;
+        saveValues(userDefaults)  ;
 
         //NSApplication.sharedApplication().displayDialog_withTitle_("result", xcodeInput.stringValue);
     }
