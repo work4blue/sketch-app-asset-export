@@ -9,12 +9,20 @@
   "bundleVersion": 1,
 
     "commands" : [
+       {
+      "script" : "handler.js",
+     "handler" : "onExport",
+      "shortcut" : "",
+       "name" : "Export AppIcon's",
+      "identifier" : "cn.bluedrum.export-appicon"
+    },
     {
       "script" : "handler.js",
      "handler" : "onRun",
       "shortcut" : "",
-       "name" : "Export AppIcon's",
-      "identifier" : "cn.bluedrum.export-appicon"
+       "name" : "Preferences",
+      "identifier" : "cn.bluedrum.export-pref"
     }
+   
   ]
 }

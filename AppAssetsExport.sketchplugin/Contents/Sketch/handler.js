@@ -10,9 +10,38 @@ var presets = {
 }       
 var userDefaults = loadDefaults(presets)
 
+var onExport = function onExport(context){
 
+  parseContext(context);
 
-var onRun = function(context){
+  var doc = context.document;
+
+  var selection = context.selection;
+
+  selectedLayers = selection;
+
+   if(selectedLayers.count() >0){
+        //doc.currentPage().deselectAllLayers();
+         var layer = selectedLayers[0];
+             layer.setIsSelected(true);
+
+         var filepath =  "/Users/pro/Documents/app.png";
+
+      
+
+       
+
+          // exportLayerToPath(layer,filepath,1,"png","");
+           exportLayerToPath(layer,filepath,1);
+
+          doc.showMessage(" export2  " + layer.name() + " to path "+filepath)   ;
+
+   }
+  else 
+      doc.showMessage("please select a layer to export.");
+}
+
+var onRun = function onRun(context){
 
 // NSMakeRect 的原点是左下角
 

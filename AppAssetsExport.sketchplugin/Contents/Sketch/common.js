@@ -670,11 +670,18 @@ function removeExportOptions(layer) {
 
 function exportLayerToPath(layer, path, scale, format, suffix) {
 
+	
+
 	if(getSketchVersionNumber() >= 350) {
 
+         log("scale "+scale+",path"+path);
 		var rect = layer.absoluteRect().rect(),
-			slice = [MSExportRequest requestWithRect:rect scale:scale],
-			layerName = layer.name() + ((typeof suffix !== 'undefined') ? suffix : ""),
+			slice = [MSExportRequest requestWithRect:rect scale:scale]
+
+
+          log("slice "+slice);
+
+			var layerName = layer.name() + ((typeof suffix !== 'undefined') ? suffix : ""),
 			format = (typeof format !== 'undefined') ? format : "png";
 
 		slice.setShouldTrim(0)
@@ -683,6 +690,9 @@ function exportLayerToPath(layer, path, scale, format, suffix) {
 		slice.setName(layerName)
 		slice.setFormat(format)
 		doc.saveArtboardOrSlice_toFile(slice, path)
+
+		log("export "+path);
+
 
 		return {
 		    x: Math.round(rect.origin.x),
