@@ -1,5 +1,22 @@
 //按width 转换
 
+     // exportTmpLayer(layer,512,"-iTunesArtwork");
+         // exportTmpLayer(layer,1024,"-iTunesArtwork@2x");
+         // exportTmpLayer(layer,120,"-60@2x");
+         // exportTmpLayer(layer,180,"-60@2x");
+         // exportTmpLayer(layer,180,"-60@3x");
+
+         //var newLayer = scaleLayer3(layer,128);
+
+         //var path =  "/Users/pro/Documents/dpp5.png";
+
+         // exportLayer(newLayer,path,1);
+        
+
+         // removeLayer(newLayer);
+
+          //doc.showMessage("export  layer to "+path);
+
 function scaleLayer3(selection, width){
 
   
