@@ -1,5 +1,8 @@
 var doc,
-    exportDir;
+    exportDir,
+    iOSSuffixArray = ["iTunesArtwork","iTunesArtwork@2x","60@2x","60@3x","76","76@2x","Small-40","Small-40@2x",
+                          "Small-40@3x","Small","Small@2x","Small@3x"],
+    iOSSizeArray = [ 512,1024,120,180,76,152,40,80,120,29,58,87];
 
 function scaleLayer3(selection, width){
 
@@ -68,10 +71,10 @@ function removeLayer(layer) {
   if (parent)[parent removeLayer: layer];
 }
 
-function exportTmpLayer(layer,width){
+function exportTmpLayer(layer,width,suffix){
      var newLayer = scaleLayer3(layer,width);
 
-     var path = exportDir+"/"+layer.name()+"-"+width+".png";
+     var path = exportDir+"/"+layer.name()+"-"+suffix+".png";
 
      exportLayer(newLayer,path,1);
         
@@ -82,12 +85,18 @@ function exportTmpLayer(layer,width){
  function initVars(context){
  	doc = context.document;
  	exportDir = "/Users/pro/Documents/AppIcon";
+
+ 	
  }
 
 
-var onExportIcon = function onExportIcon(context)
+//Assets.xcassets
+//Images.xcassets
+
+
+var onExportIcon = function onExportIcon(context,userDefaults)
 {
-    log("onExportfff");
+    log("onExportddd");
 
      initVars(context);
 
@@ -96,9 +105,15 @@ var onExportIcon = function onExportIcon(context)
       if(selection.count() >0){
          var layer =    selection.firstObject();
 
-         exportTmpLayer(layer,128);
-         exportTmpLayer(layer,512);
-         exportTmpLayer(layer,78);
+          for(var i=0; i< iOSSuffixArray.length;i++){
+          	 exportTmpLayer(layer,iOSSizeArray[i],iOSSuffixArray[i]);
+          }
+
+         // exportTmpLayer(layer,512,"-iTunesArtwork");
+         // exportTmpLayer(layer,1024,"-iTunesArtwork@2x");
+         // exportTmpLayer(layer,120,"-60@2x");
+         // exportTmpLayer(layer,180,"-60@2x");
+         // exportTmpLayer(layer,180,"-60@3x");
 
          //var newLayer = scaleLayer3(layer,128);
 
@@ -109,7 +124,7 @@ var onExportIcon = function onExportIcon(context)
 
          // removeLayer(newLayer);
 
-          doc.showMessage("export  layer to "+path);
+          //doc.showMessage("export  layer to "+path);
 
       }
      else 
