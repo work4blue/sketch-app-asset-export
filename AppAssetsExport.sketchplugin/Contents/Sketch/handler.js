@@ -10,36 +10,31 @@ var presets = {
 }       
 var userDefaults = loadDefaults(presets)
 
-var onExport = function onExport(context){
 
-  parseContext(context);
 
-  var doc = context.document;
+var onExport = function onExport(context)
+{
+    log("onExportbbb");
 
-  var selection = context.selection;
+    var doc = context.document;
 
-  selectedLayers = selection;
+      //var selection = context.selection;
 
-   if(selectedLayers.count() >0){
-        //doc.currentPage().deselectAllLayers();
-         var layer = selectedLayers[0];
-             layer.setIsSelected(true);
+     //  if(selection.count() >0){
+     //     var layer =    selection.firstObject();
+     //     var newLayer = scaleLayer3(layer,128);
 
-         var filepath =  "/Users/pro/Documents/app.png";
+     //     var path =  "/Users/pro/Documents/cpp5.png";
 
-      
+     //     exportLayerToPath(newLayer,filepath,1);
 
-       
+     //  }
+     // else 
+     //    doc.showMessage("please select a layer to export.");
 
-          // exportLayerToPath(layer,filepath,1,"png","");
-           exportLayerToPath(layer,filepath,1);
-
-          doc.showMessage(" export2  " + layer.name() + " to path "+filepath)   ;
-
-   }
-  else 
-      doc.showMessage("please select a layer to export.");
 }
+
+
 
 var onRun = function onRun(context){
 

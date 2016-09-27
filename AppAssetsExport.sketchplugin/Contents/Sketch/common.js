@@ -668,6 +668,110 @@ function removeExportOptions(layer) {
 	[[[layer exportOptions] sizes] removeAllObjects]
 }
 
+function exportScaleLayerToPath(layer, path, rect,scale, suffix) {
+
+	
+
+         log("scale5 path"+path);
+
+         scale = (typeof scale !== 'undefined') ? scale : 1
+
+
+		     var newRect =   ( (typeof rect !== 'undefined')  ? layer.absoluteRect().rect() : rect );
+       
+			var slice = [MSExportRequest requestWithRect:newRect scale:scale]
+
+			
+
+
+          log("slice "+slice);
+
+		 	var layerName = layer.name() + ((typeof suffix !== 'undefined') ? suffix : ""),
+		 	var format =  "png";
+
+		//  slice.setShouldTrim(0)
+		//  slice.setSaveForWeb(1)
+		// slice.configureForLayer(layer)
+		// slice.setName(layerName)
+		// slice.setFormat(format)
+		//doc.saveArtboardOrSlice_toFile(slice, path)
+
+		log("export3 "+path);
+
+
+		
+	
+}	
+
+function scaleLayer2(selection,scalePercentage){
+	// var selection = context.selection;
+var layer = selection.firstObject();
+
+    
+
+// Preserve layer center point.
+    var midX=layer.frame().midX();
+    var midY=layer.frame().midY();
+
+    // Scale layer by 200%
+    layer.multiplyBy(scalePercentage / 100);
+
+    // Translate frame to the original center point.
+    layer.frame().midX = midX;
+    layer.frame().midY = midY;
+
+}
+
+
+//按width 转换
+function scaleLayer3(selection, width){
+
+  
+
+  var  oldLayer = selection;
+
+  var layer = oldLayer.duplicate(),
+      frame = [layer frame],
+      oldWidth = [frame width];
+
+    var percentage =   width/oldWidth;
+
+    log("scaleLayer3 width "+width+",oldWidth="+oldWidth+",percentage="+percentage);
+
+
+    // Preserve layer center point.
+    var midX=layer.frame().midX();
+    var midY=layer.frame().midY();
+
+    layer.multiplyBy(percentage);
+     
+
+// Translate frame to the original center point.
+    layer.frame().midX = midX;
+    layer.frame().midY = midY;
+
+    return layer;
+}
+
+function scaleLayer(selection, scalePercentage) {
+    var scaleDecimal = scalePercentage / 100
+    var layer = selection,
+      frame = [layer frame],
+      oldWidth = [frame width],
+      oldHeight = [frame height],
+      oldXPos = [frame x],
+      oldYPos = [frame y],
+      newWidth = Math.round(oldWidth * scaleDecimal),
+      newHeight = Math.round(oldHeight * scaleDecimal),
+      newXPos = Math.round(oldXPos - ((newWidth - oldWidth) / 2)),
+      newYPos = Math.round(oldYPos - ((newHeight - oldHeight) / 2))
+    [frame setWidth: newWidth]
+    [frame setHeight: newHeight]
+    [frame setX: newXPos]
+    [frame setY: newYPos]
+  }
+
+
 function exportLayerToPath(layer, path, scale, format, suffix) {
 
 	
