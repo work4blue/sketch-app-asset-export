@@ -13,15 +13,14 @@ var presets = {
         exportMacIcon:0
 }   ;    
 
-
+//83.5-->167 iPad Pro
 
 var doc,
     exportDir, 
-    iOSSuffixArray = ["60","60@2x","60@3x","76","76@2x","Small-40","Small-40@2x",
-                          "Small-40@3x","Small","Small@2x","Small@3x"],
-    iOSSizeArray = [ 60,120,180,76,152,40,80,120,29,58,87],
-    iOSSizeStrArray = ["60x60", "60x60","60x60","76x76","76x76","40x40","40x40","40x40","29x29","29x29","29x29"],
-
+    iOSSuffixArray = ["60@2x","60@3x","76","76@2x","Small-40","Small-40@2x",
+                          "Small-40@3x","Small","Small@2x","Small@3x","83.5@2x"],
+    iOSSizeArray = [ 120,180,76,152,40,80,120,29,58,87,167],
+    iOSBaseArray = [ 60,60,76,76,40,40,40,29,29,29,83.5],
 
     androidDirArray = ["ldpi","mdpi","hdpi","xhdpi","xxhdpi","xxxhdpi"],
     androidSizeArray = [ 36,48,72,96,144,192],
@@ -165,6 +164,82 @@ function exportScaleLayer(layer,dir,width,suffix){
 //Assets.xcassets
 //Images.xcassets
 
+//在Content中增加相应记录
+ function addIconContent(imagesArray,name,suffix,isIpad){
+      // var suffix =  iOSSuffixArray[index];
+
+       var index = -1;
+       var scale = "1x";
+
+       for(var i=0; i< iOSSuffixArray.length ; i++){
+             if(iOSSuffixArray[i] == suffix){
+                index = i;
+                break;
+             }
+       }
+
+
+       if(index == -1){
+          log(" addIconContent failure suffix "+suffix);
+          return ;
+       }
+
+       var baseSize =  iOSBaseArray[index];
+       var sizeStr =  ""+baseSize+"x"+baseSize;
+
+         if(suffix.endsWith("@2x"))
+              scale = "2x";
+            else if (suffix.endsWith("@3x"))
+               scale = "3x";
+
+            var device = (isIpad ? "ipad" : "iphone");
+
+             var  imageObj = {              
+                 idiom : device,
+                  size:sizeStr,
+                  scale : scale,
+                  filename : name+"-"+suffix+".png"
+             }
+            imagesArray.push(imageObj)      
+
+ }
+
+function exportIphoneContentJson(layer,imagesArray){
+   var name = layer.name();
+
+   addIconContent(imagesArray,name,"60@2x",0); 
+   addIconContent(imagesArray,name,"60@3x",0); 
+   // addIconContent(imagesArray,name,"76",0); 
+   // addIconContent(imagesArray,name,"76@2x",0); 
+
+    addIconContent(imagesArray,name,"Small-40",0); 
+    addIconContent(imagesArray,name,"Small-40@2x",0); 
+    addIconContent(imagesArray,name,"Small-40@3x",0); 
+
+   addIconContent(imagesArray,name,"Small",0); //Small
+   addIconContent(imagesArray,name,"Small@2x",0); 
+   addIconContent(imagesArray,name,"Small@3x",0); 
+
+}
+
+function exportIpadContentJson(layer,imagesArray){
+   var name = layer.name();
+   addIconContent(imagesArray,name,"76",1); 
+   addIconContent(imagesArray,name,"76@2x",1); 
+   addIconContent(imagesArray,name,"83.5@2x",1); 
+
+   addIconContent(imagesArray,name,"Small-40",1); 
+    addIconContent(imagesArray,name,"Small-40@2x",1); 
+
+    addIconContent(imagesArray,name,"Small",1); 
+    addIconContent(imagesArray,name,"Small@2x",1); 
+  
+}
+
+function exportWatchContentJson(layer,imagesArray){
+  
+}
+
 function exportIOSIcon(layer){
    var tmpDir =  "/Users/pro/Documents/AppIcon";
          var appIconSetPath =  tmpDir + "/AppIcon.appiconset";
@@ -176,8 +251,7 @@ function exportIOSIcon(layer){
           return;
          }
 
-          //exportDir =  appIconSetPath;
-
+          //输出所需图片
           var imagesArray = [];
 
           for(var i=0; i< iOSSuffixArray.length;i++){
@@ -186,42 +260,51 @@ function exportIOSIcon(layer){
 
             var suffix = iOSSuffixArray[i];
 
-            var scale = "1x";
+            // var scale = "1x";
 
-            // if(hasSuffix(suffix,"@2x")){
-            //      scale = "2x";
-            //  }
-            // else if (hasSuffix(suffix,"@3x")){
-            //      scale = "3x";    
-            //  }
+            
 
-            if(suffix.endsWith("@2x"))
-              scale = "2x";
-            else if (hasSuffix(suffix,"@3x"))
-               scale = "3x";
+            // if(suffix.endsWith("@2x"))
+            //   scale = "2x";
+            // else if (suffix.endsWith("@3x"))
+            //    scale = "3x";
 
             
              var size =  iOSSizeArray[i];
 
-             var sizeStr= iOSSizeStrArray[i];
+              exportScaleLayer(layer,appIconSetPath,size,iOSSuffixArray[i]);
 
-            var finalFileName = exportScaleLayer(layer,appIconSetPath,size,iOSSuffixArray[i]);
+        //    var finalFileName = exportScaleLayer(layer,appIconSetPath,size,iOSSuffixArray[i]);
 
-               imageObj = {              
-                idiom : "iphone",
-                size:sizeStr,
-                scale : scale,
-                filename : finalFileName
-        }
-            imagesArray.push(imageObj) 
+        //        imageObj = {              
+        //         idiom : "iphone",
+        //         size:sizeStr,
+        //         scale : scale,
+        //         filename : finalFileName
+        // }
+        //     imagesArray.push(imageObj) 
 
              
           }
 
-          imageContent = {
+
+         //if(userDefaults.exportIpadIcon == 1)
+         {
+                
+            exportIpadContentJson(layer,imagesArray);
+
+         }
+         
+         if(userDefaults.exportIphoneIcon ==1){
+             exportIphoneContentJson(layer,imagesArray);
+         }
+
+
+
+       imageContent = {
         info : {
           version : 1,
-          author : "xcode"
+          author : "bluedrum"
         },
         images : imagesArray
       }
@@ -408,7 +491,7 @@ var onExportIcon = function onExportIcon(context,userDefaults)
 
      initVars(context);
 
-     doc.showMessage("aaakkk");
+     doc.showMessage("ccckkk");
 
       var selection = context.selection;
 
