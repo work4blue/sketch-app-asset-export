@@ -1,6 +1,6 @@
 @import 'common.js'
 
-var presets = {
+var presets2 = {
         xcodeProjectPath: '',
         androidResPath:'',
         otherPath:'',
@@ -8,31 +8,11 @@ var presets = {
         exportAndroid:1,
         exportOther:1,
 }       
-var userDefaults = loadDefaults(presets)
+var userDefaults = loadDefaults(presets);
 
 
 
-var onExport = function onExport(context)
-{
-    log("onExportbbb");
 
-    var doc = context.document;
-
-      //var selection = context.selection;
-
-     //  if(selection.count() >0){
-     //     var layer =    selection.firstObject();
-     //     var newLayer = scaleLayer3(layer,128);
-
-     //     var path =  "/Users/pro/Documents/cpp5.png";
-
-     //     exportLayerToPath(newLayer,filepath,1);
-
-     //  }
-     // else 
-     //    doc.showMessage("please select a layer to export.");
-
-}
 
 
 
@@ -41,6 +21,8 @@ var onRun = function onRun(context){
 // NSMakeRect 的原点是左下角
 
   log("hello onRun");
+
+  context.document.showMessage("show setting");
 
     var accessory = NSView.alloc().initWithFrame(NSMakeRect(0,0,300,280));
 

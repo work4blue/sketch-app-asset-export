@@ -1249,3 +1249,63 @@ function getSketchInfo() {
 		version: [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"]
 	}
 }
+
+
+
+function loadDefaults(initialValues) {
+	var dVal;
+	var defaults = initialValues;
+	//log("loadDefaults ");
+	for (var key in initialValues) {
+
+		 dVal = loadValue(key,typeof defaults[key]);
+
+		 if(dVal != nil){
+		  	defaults[key] = dVal;
+        log("loadDefaults key "+key+"="+dVal);
+     }
+		
+		//log("loadDefaults key "+key+"="+typeof defaults[key]);
+		
+	}
+	return defaults;
+}
+
+var keyPref = 'AppAssetExportSketch';
+
+function saveValue(key, value) {
+    key = keyPref + key;
+    if (typeof value === "boolean") {
+      [[NSUserDefaults standardUserDefaults] setBool:value forKey:key]
+    } else {
+      [[NSUserDefaults standardUserDefaults] setObject:value forKey:key]
+    }
+
+    log("saveValue key "+key+"="+value);
+    [[NSUserDefaults standardUserDefaults] synchronize]
+  }
+
+  function loadValue(key,valType){
+   try {
+    var prefs = NSUserDefaults.standardUserDefaults();
+
+    if (valType  === "boolean") {
+         return prefs.boolForKey(keyPref + key);
+    } else {
+      return prefs.stringForKey(keyPref + key);
+    }
+   
+  } catch (e) {
+    //log(e);
+  }
+}
+
+  function saveValues(newValues) {
+	for (var key in newValues) {
+		saveValue(key, newValues[key]);
+	}
+}
+
+
+
+

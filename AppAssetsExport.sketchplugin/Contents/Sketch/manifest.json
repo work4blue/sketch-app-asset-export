@@ -17,8 +17,8 @@
       "identifier" : "cn.bluedrum.export-appicon"
     },
     {
-      "script" : "handler.js",
-     "handler" : "onRun",
+      "script" : "export.js",
+     "handler" : "onSetting",
       "shortcut" : "",
        "name" : "Preferences",
       "identifier" : "cn.bluedrum.export-pref"
