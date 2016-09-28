@@ -7,6 +7,10 @@ var presets = {
         exportXcode:1,
         exportAndroid:1,
         exportOther:1,
+        exportIphoneIcon:1,
+        exportIpadIcon:0,
+        exportAppleWatchIcon:0,
+        exportMacIcon:0
 }   ;    
 
 
@@ -293,25 +297,42 @@ function exportAndroidIcon(layer){
 
   // context.document.showMessage("show setting");
 
-    var accessory = NSView.alloc().initWithFrame(NSMakeRect(0,0,300,280));
+    var accessory = NSView.alloc().initWithFrame(NSMakeRect(0,0,300,320));
 
 
-  var checkboxXCode = NSButton.alloc().initWithFrame(NSMakeRect(0,214,300,25));
+  var checkboxXCode = NSButton.alloc().initWithFrame(NSMakeRect(0,264,300,25));
     checkboxXCode.setButtonType(3);
     checkboxXCode.title = 'Input XCode Project (xcodeproj) folder';
     checkboxXCode.state =  userDefaults.exportXcode;
 
    
- var textXcode = NSTextView.alloc().initWithFrame(NSMakeRect(0,194,300,20));
+ var textXcode = NSTextView.alloc().initWithFrame(NSMakeRect(0,244,300,20));
     textXcode.string = '( or drop you project or workspace file to here)';
     textXcode.drawsBackground = false;
     textXcode.editable = false;
 
 
-   var xcodeInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,170,300,25));
+   var xcodeInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,220,300,25));
     xcodeInput.stringValue = userDefaults.xcodeProjectPath;
     xcodeInput.editable = true;
     xcodeInput.placeholder="Drop you project or workspace file to here"
+
+
+    var checkboxIphone = NSButton.alloc().initWithFrame(NSMakeRect(20,192,300,25));
+    checkboxIphone.setButtonType(3);
+    checkboxIphone.title = 'iPhone';
+    checkboxIphone.state =  userDefaults.exportIphoneIcon;
+
+    var checkboxIpad = NSButton.alloc().initWithFrame(NSMakeRect(100,192,300,25));
+    checkboxIpad.setButtonType(3);
+    checkboxIpad.title = 'iPad';
+    checkboxIpad.state =  userDefaults.exportIpadIcon;
+
+    var checkboxAppleWatch = NSButton.alloc().initWithFrame(NSMakeRect(180,192,300,25));
+    checkboxAppleWatch.setButtonType(3);
+    checkboxAppleWatch.title = 'Apple Watch';
+    checkboxAppleWatch.state =  userDefaults.exportAppleWatchIcon;
+
 
     var checkboxAndroid = NSButton.alloc().initWithFrame(NSMakeRect(0,124,300,25));
     checkboxAndroid.setButtonType(3);
@@ -343,6 +364,9 @@ var otherInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,12,300,25));
    accessory.addSubview(xcodeInput);
    accessory.addSubview(textXcode);
    accessory.addSubview(checkboxOther);
+   accessory.addSubview(checkboxIphone);
+   accessory.addSubview(checkboxIpad);
+   accessory.addSubview(checkboxAppleWatch);
    accessory.addSubview(androidInput);
     accessory.addSubview(textAndroid);
    accessory.addSubview(checkboxAndroid);
