@@ -4,11 +4,18 @@
 
 var doc,
     exportDir, 
-    iOSSuffixArray = ["iTunesArtwork","iTunesArtwork@2x","60@2x","60@3x","76","76@2x","Small-40","Small-40@2x",
+    iOSSuffixArray = ["60","60@2x","60@3x","76","76@2x","Small-40","Small-40@2x",
                           "Small-40@3x","Small","Small@2x","Small@3x"],
-    iOSSizeArray = [ 512,1024,120,180,76,152,40,80,120,29,58,87],
+    iOSSizeArray = [ 60,120,180,76,152,40,80,120,29,58,87],
+    iOSSizeStrArray = ["60x60", "60x60","60x60","76x76","76x76","40x40","40x40","40x40","29x29","29x29","29x29"],
 
-    iOSMiArray = [ 90,136,168,192,224];
+
+    androidDirArray = ["ldpi","mdpi","hdpi","xhdpi","xxhdpi","xxxhdpi"],
+    androidSizeArray = [ 36,48,72,96,144,192],
+
+     storeSuffixArray = [ "iTunesArtwork","iTunesArtwork@2x","GooglePlay","mi-90","mi-136","mi-168","mi-192","mi-224","qq-16","qq-512"],
+      storeSizeArray = [ 512,1024,512,90,136,168,192,224,16,512];
+    
 
  function hasSuffix(str,suffix){
  	// if (typeof String.prototype.endsWith != 'function') {
@@ -142,29 +149,15 @@ function exportScaleLayer(layer,dir,width,suffix){
 //Assets.xcassets
 //Images.xcassets
 
-
-var onExportIcon = function onExportIcon(context,userDefaults)
-{
-    log("onExportfff");
-
-
-     initVars(context);
-
-     doc.showMessage("kkqq");
-
-      var selection = context.selection;
-
-      if(selection.count() >0){
-         var layer =    selection.firstObject();
-
-         var tmpDir =  "/Users/pro/Documents/AppIcon";
+function exportIOSIcon(layer){
+   var tmpDir =  "/Users/pro/Documents/AppIcon";
          var appIconSetPath =  tmpDir + "/AppIcon.appiconset";
 
          log("out "+appIconSetPath );
 
          if (!createFolderAtPath(appIconSetPath)) {
-         	doc.showMessage("create "+appIconSetPath+" failure!");
-         	return;
+          doc.showMessage("create "+appIconSetPath+" failure!");
+          return;
          }
 
           //exportDir =  appIconSetPath;
@@ -173,47 +166,133 @@ var onExportIcon = function onExportIcon(context,userDefaults)
 
           for(var i=0; i< iOSSuffixArray.length;i++){
 
-          	
+            
 
-          	var suffix = iOSSuffixArray[i];
+            var suffix = iOSSuffixArray[i];
 
-          	var scale = "1x";
+            var scale = "1x";
 
-          	if(hasSuffix(suffix,"@2x")){
-          	     scale = "2x";
-          	 }
-          	else if (hasSuffix(suffix,"@3x")){
-          	     scale = "3x";    
-          	 }
+            // if(hasSuffix(suffix,"@2x")){
+            //      scale = "2x";
+            //  }
+            // else if (hasSuffix(suffix,"@3x")){
+            //      scale = "3x";    
+            //  }
 
-          	var finalFileName = exportScaleLayer(layer,appIconSetPath,iOSSizeArray[i],iOSSuffixArray[i]);
+            if(suffix.endsWith("@2x"))
+              scale = "2x";
+            else if (hasSuffix(suffix,"@3x"))
+               scale = "3x";
 
-               imageObj = {
-					idiom : "universal",
-					scale : scale,
-					filename : finalFileName
-				}
-				imagesArray.push(imageObj) 
+            
+             var size =  iOSSizeArray[i];
 
-          	 
+             var sizeStr= iOSSizeStrArray[i];
+
+            var finalFileName = exportScaleLayer(layer,appIconSetPath,size,iOSSuffixArray[i]);
+
+               imageObj = {              
+                idiom : "iphone",
+                size:sizeStr,
+                scale : scale,
+                filename : finalFileName
+        }
+            imagesArray.push(imageObj) 
+
+             
           }
 
           imageContent = {
-				info : {
-					version : 1,
-					author : "bluedrum"
-				},
-				images : imagesArray
-			}
+        info : {
+          version : 1,
+          author : "xcode"
+        },
+        images : imagesArray
+      }
 
 
-			var filePath = appIconSetPath + "/Contents.json"
-			log("json file2 "+filePath);
-			var jsonString = stringify(imageContent, true)	
-         	writeTextToFile(jsonString, filePath)
+      var filePath = appIconSetPath + "/Contents.json"
+      log("json file2 "+filePath);
+      var jsonString = stringify(imageContent, true)  
+          writeTextToFile(jsonString, filePath)
+}
+
+function exportStoreIcon(layer){
+        var tmpDir =  "/Users/pro/Documents/AppIcon";
+         var storeIconSetPath =  tmpDir + "/store";
+
+         log("out "+storeIconSetPath );
+
+         if (!createFolderAtPath(storeIconSetPath)) {
+          doc.showMessage("create "+storeIconSetPath+" failure!");
+          return;
+         }
+
+            for(var i=0; i< storeSuffixArray.length;i++){
+
+            
+
+            var suffix = storeSuffixArray[i];
+            var size = storeSizeArray[i];
+
+             exportScaleLayer(layer,storeIconSetPath,size,suffix);
+          }
 
 
+}
 
+function exportAndroidIcon(layer){
+   var tmpDir =  "/Users/pro/Documents/AppIcon";
+         var appIconSetPath =  tmpDir + "/res";
+
+         log("out "+appIconSetPath );
+
+       if (!createFolderAtPath(appIconSetPath)) {
+          doc.showMessage("create "+appIconSetPath+" failure!");
+          return;
+         }
+
+          for(var i=0; i< androidDirArray.length;i++){
+
+            
+
+            var suffix = androidDirArray[i];
+            var size = androidSizeArray[i];
+
+
+             var path =  appIconSetPath+"/drawable-"+suffix;
+             if (!createFolderAtPath(path)) {
+                   log("create "+path+" failure!");
+                   continue;
+           
+                  }
+
+             exportScaleLayer(layer,path,size,suffix);
+          }
+
+
+ }
+
+var onExportIcon = function onExportIcon(context,userDefaults)
+{
+    log("onExportfff");
+
+
+     initVars(context);
+
+     doc.showMessage("aaakkk");
+
+      var selection = context.selection;
+
+      if(selection.count() >0){
+         var layer =    selection.firstObject();
+
+         exportStoreIcon(layer);
+
+         exportIOSIcon(layer);
+
+         exportAndroidIcon(layer);
+         
     
 
       }
