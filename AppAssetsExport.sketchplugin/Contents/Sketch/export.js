@@ -17,6 +17,8 @@ var presets = {
 
 var doc,
     exportDir, 
+    appIconSetPath,
+    currentLayer,
     iOSSuffixArray = ["60@2x","60@3x","76","76@2x","Small-40","Small-40@2x",
                           "Small-40@3x","Small","Small@2x","Small@3x","83.5@2x"],
     iOSSizeArray = [ 120,180,76,152,40,80,120,29,58,87,167],
@@ -164,6 +166,20 @@ function exportScaleLayer(layer,dir,width,suffix){
 //Assets.xcassets
 //Images.xcassets
 
+function findImage(imagesArray,filename){
+
+ 
+
+  for(i=0;i<imagesArray.length; i++){
+      var imageObj =  imagesArray[i];
+      if(imageObj.filename == filename)
+        return true;
+
+  }
+
+  return false;
+}
+
 //在Content中增加相应记录
  function addIconContent(imagesArray,name,suffix,isIpad){
       // var suffix =  iOSSuffixArray[index];
@@ -184,6 +200,8 @@ function exportScaleLayer(layer,dir,width,suffix){
           return ;
        }
 
+      
+
        var baseSize =  iOSBaseArray[index];
        var sizeStr =  ""+baseSize+"x"+baseSize;
 
@@ -193,43 +211,61 @@ function exportScaleLayer(layer,dir,width,suffix){
                scale = "3x";
 
             var device = (isIpad ? "ipad" : "iphone");
+            var filename = name+"-"+suffix+".png";
+
+
+            if(!findImage(imagesArray,filename)){
+                log("no find "+filename+",export ");
+                var size =  iOSSizeArray[index];
+                exportScaleLayer(currentLayer,appIconSetPath,size,suffix);
+            }
+            else {
+              log(" find "+filename);
+            }
+
+            //查找是否已经生成,如果没有则生成
 
              var  imageObj = {              
-                 idiom : device,
+                  idiom : device,
                   size:sizeStr,
                   scale : scale,
-                  filename : name+"-"+suffix+".png"
+                  filename : filename
              }
-            imagesArray.push(imageObj)      
+            imagesArray.push(imageObj)     
+           //imagesArray.splice(0,0,imageObj); //插入头部 
 
  }
 
 function exportIphoneContentJson(layer,imagesArray){
    var name = layer.name();
 
+   addIconContent(imagesArray,name,"Small",0); //Small
+   addIconContent(imagesArray,name,"Small@2x",0); 
+   addIconContent(imagesArray,name,"Small@3x",0); 
+
+    //addIconContent(imagesArray,name,"Small-40",0); 
+    addIconContent(imagesArray,name,"Small-40@2x",0); 
+    addIconContent(imagesArray,name,"Small-40@3x",0); 
+
    addIconContent(imagesArray,name,"60@2x",0); 
    addIconContent(imagesArray,name,"60@3x",0); 
    // addIconContent(imagesArray,name,"76",0); 
    // addIconContent(imagesArray,name,"76@2x",0); 
 
-    addIconContent(imagesArray,name,"Small-40",0); 
-    addIconContent(imagesArray,name,"Small-40@2x",0); 
-    addIconContent(imagesArray,name,"Small-40@3x",0); 
-
-   addIconContent(imagesArray,name,"Small",0); //Small
-   addIconContent(imagesArray,name,"Small@2x",0); 
-   addIconContent(imagesArray,name,"Small@3x",0); 
-
 }
 
 function exportIpadContentJson(layer,imagesArray){
    var name = layer.name();
+
+    addIconContent(imagesArray,name,"Small-40",1); 
+    addIconContent(imagesArray,name,"Small-40@2x",1); 
+
+
    addIconContent(imagesArray,name,"76",1); 
    addIconContent(imagesArray,name,"76@2x",1); 
    addIconContent(imagesArray,name,"83.5@2x",1); 
 
-   addIconContent(imagesArray,name,"Small-40",1); 
-    addIconContent(imagesArray,name,"Small-40@2x",1); 
+  
 
     addIconContent(imagesArray,name,"Small",1); 
     addIconContent(imagesArray,name,"Small@2x",1); 
@@ -242,9 +278,11 @@ function exportWatchContentJson(layer,imagesArray){
 
 function exportIOSIcon(layer){
    var tmpDir =  "/Users/pro/Documents/AppIcon";
-         var appIconSetPath =  tmpDir + "/AppIcon.appiconset";
+          appIconSetPath =  tmpDir + "/AppIcon.appiconset";
 
          log("out "+appIconSetPath );
+
+         doc.showMessage("eeekkk");
 
          if (!createFolderAtPath(appIconSetPath)) {
           doc.showMessage("create "+appIconSetPath+" failure!");
@@ -253,42 +291,43 @@ function exportIOSIcon(layer){
 
           //输出所需图片
           var imagesArray = [];
+          currentLayer = layer;
 
-          for(var i=0; i< iOSSuffixArray.length;i++){
-
-            
-
-            var suffix = iOSSuffixArray[i];
-
-            // var scale = "1x";
+        //   for(var i=0; i< iOSSuffixArray.length;i++){
 
             
 
-            // if(suffix.endsWith("@2x"))
-            //   scale = "2x";
-            // else if (suffix.endsWith("@3x"))
-            //    scale = "3x";
+        //     var suffix = iOSSuffixArray[i];
+
+        //     // var scale = "1x";
 
             
-             var size =  iOSSizeArray[i];
 
-              exportScaleLayer(layer,appIconSetPath,size,iOSSuffixArray[i]);
+        //     // if(suffix.endsWith("@2x"))
+        //     //   scale = "2x";
+        //     // else if (suffix.endsWith("@3x"))
+        //     //    scale = "3x";
 
-        //    var finalFileName = exportScaleLayer(layer,appIconSetPath,size,iOSSuffixArray[i]);
+            
+        //      // var size =  iOSSizeArray[i];
 
-        //        imageObj = {              
-        //         idiom : "iphone",
-        //         size:sizeStr,
-        //         scale : scale,
-        //         filename : finalFileName
-        // }
-        //     imagesArray.push(imageObj) 
+        //      //  exportScaleLayer(layer,appIconSetPath,size,iOSSuffixArray[i]);
+
+        // //    var finalFileName = exportScaleLayer(layer,appIconSetPath,size,iOSSuffixArray[i]);
+
+        // //        imageObj = {              
+        // //         idiom : "iphone",
+        // //         size:sizeStr,
+        // //         scale : scale,
+        // //         filename : finalFileName
+        // // }
+        // //     imagesArray.push(imageObj) 
 
              
-          }
+        //   }
 
 
-         //if(userDefaults.exportIpadIcon == 1)
+        //if(userDefaults.exportIpadIcon == 1)
          {
                 
             exportIpadContentJson(layer,imagesArray);
@@ -298,6 +337,8 @@ function exportIOSIcon(layer){
          if(userDefaults.exportIphoneIcon ==1){
              exportIphoneContentJson(layer,imagesArray);
          }
+
+
 
 
 
@@ -491,7 +532,7 @@ var onExportIcon = function onExportIcon(context,userDefaults)
 
      initVars(context);
 
-     doc.showMessage("ccckkk");
+     
 
       var selection = context.selection;
 
