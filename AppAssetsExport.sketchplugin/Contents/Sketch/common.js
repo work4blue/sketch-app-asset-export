@@ -1262,7 +1262,7 @@ function loadDefaults(initialValues) {
 
 		 if(dVal != nil){
 		  	defaults[key] = dVal;
-        log("loadDefaults key "+key+"="+dVal);
+        log("loadDefaults key "+key+"="+dVal+", type="+(typeof defaults[key]));
      }
 		
 		//log("loadDefaults key "+key+"="+typeof defaults[key]);

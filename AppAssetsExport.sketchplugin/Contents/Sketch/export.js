@@ -1,9 +1,9 @@
 @import 'common.js'
 
 var presets = {
-        xcodeProjectPath: '',
-        androidResPath:'',
-        otherPath:'',
+        xcodeProjectPath: '/Users/Shared/AppIcon/Assets.xcassets',
+        androidResPath:'/Users/Shared/AppIcon/res',
+        otherPath:'/Users/Shared/AppIcon/store',
         exportXcode:1,
         exportAndroid:1,
         exportOther:1,
@@ -327,7 +327,7 @@ function exportIOSIcon(layer){
         //   }
 
 
-        //if(userDefaults.exportIpadIcon == 1)
+        if(userDefaults.exportIpadIcon == 1)
          {
                 
             exportIpadContentJson(layer,imagesArray);
@@ -414,12 +414,14 @@ function exportAndroidIcon(layer){
  }
 
  var onSetting = function onSetting(context){
-  log("onSetting6");
+  log("onSetting7");
   context.document.showMessage("show setting6");
 
   // log("hello onRun");
 
   // context.document.showMessage("show setting");
+
+  log("userDefaults.xcodeProjectPath ="+userDefaults.xcodeProjectPath);
 
     var accessory = NSView.alloc().initWithFrame(NSMakeRect(0,0,300,320));
 
@@ -515,6 +517,17 @@ var otherInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,12,300,25));
          userDefaults.androidResPath = androidInput.stringValue();
          userDefaults.otherPath = otherInput.stringValue();
 
+         userDefaults.exportXcode = checkboxXCode.state();
+
+         userDefaults.exportIphoneIcon = checkboxIphone.state() ;
+
+         userDefaults.exportIpadIcon = checkboxIpad.state() ;
+         userDefaults.exportAppleWatchIcon = checkboxAppleWatch.state();
+
+         userDefaults.exportAndroid = checkboxAndroid.state();
+
+         userDefaults.exportOther = checkboxOther.state();
+
          //log(@"save input xcode"+xcodeInput.stringValue())
         saveValues(userDefaults)  ;
 
@@ -527,23 +540,31 @@ var otherInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,12,300,25));
 
 var onExportIcon = function onExportIcon(context,userDefaults)
 {
-    log("onExportfff");
+    log("onExporCCC");
 
+    userDefaults = loadDefaults(presets);
 
-     initVars(context);
+    parseContext(context);
 
-     
+     //initVars(context);
+
+     log("userDefaults.xcodeProjectPath ="+userDefaults.xcodeProjectPath);
 
       var selection = context.selection;
 
       if(selection.count() >0){
          var layer =    selection.firstObject();
 
-         exportStoreIcon(layer);
+         log("exportOther ="+userDefaults.exportOther.intValue());
 
-         exportIOSIcon(layer);
+        if(userDefaults.exportOther ==1)  
+            exportStoreIcon(layer);
 
-         exportAndroidIcon(layer);
+        if(userDefaults.exportXcode ==1)  
+             exportIOSIcon(layer);
+     
+        if(userDefaults.exportAndroid ==1)    
+              exportAndroidIcon(layer);
          
     
 
