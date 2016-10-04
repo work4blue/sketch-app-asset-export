@@ -17,6 +17,7 @@ var presets = {
 
 var doc,
     exportDir, 
+    exportInfo,
     appIconSetPath,
     currentLayer,
     iOSSuffixArray = ["60@2x","60@3x","76","76@2x","Small-40","Small-40@2x",
@@ -277,8 +278,14 @@ function exportWatchContentJson(layer,imagesArray){
 }
 
 function exportIOSIcon(layer){
-   var tmpDir =  "/Users/pro/Documents/AppIcon";
-          appIconSetPath =  tmpDir + "/AppIcon.appiconset";
+   //var tmpDir =  "/Users/pro/Documents/AppIcon";
+   
+
+   var  tmpDir =  userDefaults.xcodeProjectPath;
+     var    appIconSetPath =  tmpDir + "/AppIcon.appiconset";
+
+   createFolderAtPath(tmpDir);
+
 
          log("out "+appIconSetPath );
 
@@ -339,7 +346,7 @@ function exportIOSIcon(layer){
          }
 
 
-
+         exportInfo += "export iOS icon to "+ appIconSetPath +"\n";
 
 
        imageContent = {
@@ -358,8 +365,10 @@ function exportIOSIcon(layer){
 }
 
 function exportStoreIcon(layer){
-        var tmpDir =  "/Users/pro/Documents/AppIcon";
-         var storeIconSetPath =  tmpDir + "/store";
+        //var tmpDir =  "/Users/pro/Documents/AppIcon";
+        // var storeIconSetPath =  tmpDir + "/store";
+
+         var storeIconSetPath =  userDefaults.otherPath;
 
          log("out "+storeIconSetPath );
 
@@ -378,12 +387,17 @@ function exportStoreIcon(layer){
              exportScaleLayer(layer,storeIconSetPath,size,suffix);
           }
 
+          exportInfo += "export store icon to "+ storeIconSetPath +"\n";
+
+
 
 }
 
 function exportAndroidIcon(layer){
-   var tmpDir =  "/Users/pro/Documents/AppIcon";
-         var appIconSetPath =  tmpDir + "/res";
+   //var tmpDir =  "/Users/pro/Documents/AppIcon";
+    //     var appIconSetPath =  tmpDir + "/res";
+
+    var  appIconSetPath =  userDefaults.androidResPath;
 
          log("out "+appIconSetPath );
 
@@ -409,6 +423,9 @@ function exportAndroidIcon(layer){
 
              exportScaleLayer(layer,path,size,suffix);
           }
+
+
+          exportInfo += "export Android icon to "+ appIconSetPath +"\n";
 
 
  }
@@ -552,6 +569,8 @@ var onExportIcon = function onExportIcon(context,userDefaults)
 
       var selection = context.selection;
 
+      exportInfo = ""; //输出文本
+
       if(selection.count() >0){
          var layer =    selection.firstObject();
 
@@ -567,6 +586,10 @@ var onExportIcon = function onExportIcon(context,userDefaults)
               exportAndroidIcon(layer);
          
     
+        if(exportText == "")
+            doc.showMessage("none icon export.");
+          else 
+            doc.showMessage(exportText);
 
       }
      else 
