@@ -246,20 +246,7 @@ function exportIOSIcon(layer){
        checkExportDir(userDefaults.xcodeProjectPath,"AppIcon.appiconset");
    
 
-   // var  tmpDir =  userDefaults.xcodeProjectPath;
-   //   var    appIconSetPath =  tmpDir + "/AppIcon.appiconset";
-
-   // createFolderAtPath(tmpDir);
-
-
-   //       log("out "+appIconSetPath );
-
-   //       doc.showMessage("eeekkk");
-
-   //       if (!createFolderAtPath(appIconSetPath)) {
-   //        doc.showMessage("create "+appIconSetPath+" failure!");
-   //        return;
-   //       }
+   
 
           //输出所需图片
           var imagesArray = [];
@@ -299,26 +286,13 @@ function exportIOSIcon(layer){
 }
 
 function exportStoreIcon(layer){
-        //var tmpDir =  "/Users/pro/Documents/AppIcon";
-        // var storeIconSetPath =  tmpDir + "/store";
-
-         //var storeIconSetPath =  userDefaults.otherPath;
+       
 
 
           checkExportDir(userDefaults.otherPath,"store");
 
          
-         // createFolderAtPath(userDefaults.otherPath)
-
-         // appIconSetPath =  userDefaults.otherPath +"/store";
-
-
-         // log("export store icon to"+appIconSetPath );
-
-         // if (!createFolderAtPath(appIconSetPath)) {
-         //  doc.showMessage("create "+appIconSetPath+" failure!");
-         //  return;
-         // }
+         
 
             for(var i=0; i< storeSuffixArray.length;i++){
 
@@ -337,17 +311,7 @@ function exportStoreIcon(layer){
 }
 
 function exportAndroidIcon(layer){
-   //var tmpDir =  "/Users/pro/Documents/AppIcon";
-    //     var appIconSetPath =  tmpDir + "/res";
-
-    // var  appIconSetPath =  userDefaults.androidResPath;
-
-    //      log("out "+appIconSetPath );
-
-    //    if (!createFolderAtPath(appIconSetPath)) {
-    //       doc.showMessage("create "+appIconSetPath+" failure!");
-    //       return;
-    //      }
+  
 
            checkExportDir(userDefaults.androidResPath,"res");
 
