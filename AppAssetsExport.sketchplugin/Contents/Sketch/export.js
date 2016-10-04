@@ -3,7 +3,7 @@
 var presets = {
         xcodeProjectPath: '/Users/Shared/AppIcon/Assets.xcassets',
         androidResPath:'/Users/Shared/AppIcon/res',
-        otherPath:'/Users/Shared/AppIcon/store',
+        otherPath:'/Users/Shared/AppIcon',
         exportXcode:1,
         exportAndroid:1,
         exportOther:1,
@@ -19,6 +19,7 @@ var doc,
     exportDir, 
     exportInfo,
     appIconSetPath,
+    defalutPath = "/Users/Shared/AppIcon",
     currentLayer,
     iOSSuffixArray = ["60@2x","60@3x","76","76@2x","Small-40","Small-40@2x",
                           "Small-40@3x","Small","Small@2x","Small@3x","83.5@2x"],
@@ -53,72 +54,7 @@ var doc,
          return str.slice(0, prefix.length) == prefix;
  }   
 
-// function scaleLayer3(selection, width){
 
-   
-
-//   var  oldLayer = selection;
-
-//   var layer = oldLayer.duplicate(),
-//       frame = [layer frame],
-//       oldWidth = [frame width];
-
-//       layer.setName(oldLayer.name() + width);
-
-//     var percentage =   width/oldWidth;
-
-//     log("scaleLayer3 width "+width+",oldWidth="+oldWidth+",percentage="+percentage);
-
-
-//     // Preserve layer center point.
-//     var midX=layer.frame().midX();
-//     var midY=layer.frame().midY();
-
-//     layer.multiplyBy(percentage);
-     
-
-// // Translate frame to the original center point.
-//     layer.frame().midX = midX;
-//     layer.frame().midY = midY;
-
-//     return layer;
-// }
-
-
-// function exportLayer(layer, path, scale, format, suffix){
-	
-//          log("scale "+scale+",path"+path);
-// 		var rect = layer.absoluteRect().rect(),
-// 			slice = [MSExportRequest requestWithRect:rect scale:scale]
-
-
-//           //log("slice "+slice);
-
-// 			var layerName = layer.name() + ((typeof suffix !== 'undefined') ? suffix : ""),
-// 			format = (typeof format !== 'undefined') ? format : "png";
-
-// 		slice.setShouldTrim(0)
-// 		slice.setSaveForWeb(1)
-// 		slice.configureForLayer(layer)
-// 		slice.setName(layerName)
-// 		slice.setFormat(format)
-// 		doc.saveArtboardOrSlice_toFile(slice, path)
-
-// 		log("export "+path);
-
-
-// 		return {
-// 		    x: Math.round(rect.origin.x),
-// 		    y: Math.round(rect.origin.y),
-// 		    width: Math.round(rect.size.width),
-// 		    height: Math.round(rect.size.height)
-// 		}
-// }
-
-// function removeLayer(layer) {
-//   var parent = [layer parentGroup];
-//   if (parent)[parent removeLayer: layer];
-// }
 
 function exportScaleLayer(layer,dir,width,suffix){
      
@@ -142,25 +78,52 @@ function exportScaleLayer(layer,dir,width,suffix){
     
  }
 
-// function exportTmpLayer(layer,width,suffix){
-//      var newLayer = scaleLayer3(layer,width
- 
-//     var name = layer.name()+"-"+suffix+".png";
-//      var path = exportDir+"/"+ name;
 
-//      exportLayer(newLayer,path,1);
-        
-//      removeLayer(newLayer);
-
-//      return  name;
-    
-//  }
 
  function initVars(context){
  	doc = context.document;
  	exportDir = "/Users/pro/Documents/AppIcon";
 
  	
+ }
+
+ function checkExportDir(path,suffix){
+    if(typeof path == 'undefined'){
+       path  = "/User/Shared/AppIcon";
+    }
+
+    if(path.endsWith("/"+suffix)){
+       createFolderAtPath(path);
+
+       
+       
+    }
+    else {
+
+      createFolderAtPath(path);
+
+      // var isEnd = path.endsWith("\/");
+      // var isEnd2 = path.endsWith("/");
+
+      // log(" path "+path+" isEnd "+isEnd+","+isEnd2);
+
+      //  if(isEnd == false){
+
+      //    path += "\/";
+
+      //     log("checkExportDir add splite2 "+path+","+path.endsWith("\/"));
+      //  }
+
+       path += "/"+suffix;
+
+       createFolderAtPath(path);
+
+       log("checkExportDir2 "+path); 
+    }
+
+    appIconSetPath = path;
+
+    log("checkExportDir "+path);
  }
 
 
@@ -279,59 +242,30 @@ function exportWatchContentJson(layer,imagesArray){
 
 function exportIOSIcon(layer){
    //var tmpDir =  "/Users/pro/Documents/AppIcon";
+
+       checkExportDir(userDefaults.xcodeProjectPath,"AppIcon.appiconset");
    
 
-   var  tmpDir =  userDefaults.xcodeProjectPath;
-     var    appIconSetPath =  tmpDir + "/AppIcon.appiconset";
+   // var  tmpDir =  userDefaults.xcodeProjectPath;
+   //   var    appIconSetPath =  tmpDir + "/AppIcon.appiconset";
 
-   createFolderAtPath(tmpDir);
+   // createFolderAtPath(tmpDir);
 
 
-         log("out "+appIconSetPath );
+   //       log("out "+appIconSetPath );
 
-         doc.showMessage("eeekkk");
+   //       doc.showMessage("eeekkk");
 
-         if (!createFolderAtPath(appIconSetPath)) {
-          doc.showMessage("create "+appIconSetPath+" failure!");
-          return;
-         }
+   //       if (!createFolderAtPath(appIconSetPath)) {
+   //        doc.showMessage("create "+appIconSetPath+" failure!");
+   //        return;
+   //       }
 
           //输出所需图片
           var imagesArray = [];
           currentLayer = layer;
 
-        //   for(var i=0; i< iOSSuffixArray.length;i++){
-
-            
-
-        //     var suffix = iOSSuffixArray[i];
-
-        //     // var scale = "1x";
-
-            
-
-        //     // if(suffix.endsWith("@2x"))
-        //     //   scale = "2x";
-        //     // else if (suffix.endsWith("@3x"))
-        //     //    scale = "3x";
-
-            
-        //      // var size =  iOSSizeArray[i];
-
-        //      //  exportScaleLayer(layer,appIconSetPath,size,iOSSuffixArray[i]);
-
-        // //    var finalFileName = exportScaleLayer(layer,appIconSetPath,size,iOSSuffixArray[i]);
-
-        // //        imageObj = {              
-        // //         idiom : "iphone",
-        // //         size:sizeStr,
-        // //         scale : scale,
-        // //         filename : finalFileName
-        // // }
-        // //     imagesArray.push(imageObj) 
-
-             
-        //   }
+       
 
 
         if(userDefaults.exportIpadIcon == 1)
@@ -368,14 +302,23 @@ function exportStoreIcon(layer){
         //var tmpDir =  "/Users/pro/Documents/AppIcon";
         // var storeIconSetPath =  tmpDir + "/store";
 
-         var storeIconSetPath =  userDefaults.otherPath;
+         //var storeIconSetPath =  userDefaults.otherPath;
 
-         log("out "+storeIconSetPath );
 
-         if (!createFolderAtPath(storeIconSetPath)) {
-          doc.showMessage("create "+storeIconSetPath+" failure!");
-          return;
-         }
+          checkExportDir(userDefaults.otherPath,"store");
+
+         
+         // createFolderAtPath(userDefaults.otherPath)
+
+         // appIconSetPath =  userDefaults.otherPath +"/store";
+
+
+         // log("export store icon to"+appIconSetPath );
+
+         // if (!createFolderAtPath(appIconSetPath)) {
+         //  doc.showMessage("create "+appIconSetPath+" failure!");
+         //  return;
+         // }
 
             for(var i=0; i< storeSuffixArray.length;i++){
 
@@ -384,10 +327,10 @@ function exportStoreIcon(layer){
             var suffix = storeSuffixArray[i];
             var size = storeSizeArray[i];
 
-             exportScaleLayer(layer,storeIconSetPath,size,suffix);
+             exportScaleLayer(layer,appIconSetPath,size,suffix);
           }
 
-          exportInfo += "export store icon to "+ storeIconSetPath +"\n";
+          exportInfo += "export store icon to "+ appIconSetPath +"\n";
 
 
 
@@ -397,14 +340,16 @@ function exportAndroidIcon(layer){
    //var tmpDir =  "/Users/pro/Documents/AppIcon";
     //     var appIconSetPath =  tmpDir + "/res";
 
-    var  appIconSetPath =  userDefaults.androidResPath;
+    // var  appIconSetPath =  userDefaults.androidResPath;
 
-         log("out "+appIconSetPath );
+    //      log("out "+appIconSetPath );
 
-       if (!createFolderAtPath(appIconSetPath)) {
-          doc.showMessage("create "+appIconSetPath+" failure!");
-          return;
-         }
+    //    if (!createFolderAtPath(appIconSetPath)) {
+    //       doc.showMessage("create "+appIconSetPath+" failure!");
+    //       return;
+    //      }
+
+           checkExportDir(userDefaults.androidResPath,"res");
 
           for(var i=0; i< androidDirArray.length;i++){
 
@@ -555,6 +500,21 @@ var otherInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,12,300,25));
     }
  }
 
+ function showMultiText(context,text){
+      var alert = NSAlert.alloc().init();
+      log("showText "+text);
+    alert.setMessageText(text);
+
+    alert.addButtonWithTitle('Close');
+    
+     alert.setIcon(NSImage.alloc().initWithContentsOfFile(
+      context.plugin.urlForResourceNamed('logo.png').path()));
+   
+    var responseCode = alert.runModal();
+
+
+ }
+
 var onExportIcon = function onExportIcon(context,userDefaults)
 {
     log("onExporCCC");
@@ -586,10 +546,11 @@ var onExportIcon = function onExportIcon(context,userDefaults)
               exportAndroidIcon(layer);
          
     
-        if(exportText == "")
+        if(exportInfo == "")
             doc.showMessage("none icon export.");
           else 
-            doc.showMessage(exportText);
+            showMultiText(context,exportInfo);
+            //doc.showMessage(exportInfo);
 
       }
      else 
