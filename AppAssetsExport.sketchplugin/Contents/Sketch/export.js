@@ -71,23 +71,6 @@ var doc,
 }
     
 
- function hasSuffix(str,suffix){
- 	// if (typeof String.prototype.endsWith != 'function') {
-  //      String.prototype.endsWith = function (str){
-  //         return this.slice(-str.length) == str;
-  //      };
-  //    }
-     return str.slice(-suffix.length) == suffix;
- }  
-
- function hasPrefix(str,prefix){
- // if (typeof String.prototype.startsWith != 'function') 
- //       String.prototype.startsWith = function (str){
- //          return this.slice(0, str.length) == str;
- //       };
- //     }
-         return str.slice(0, prefix.length) == prefix;
- }   
 
 
 
@@ -137,17 +120,6 @@ function exportScaleLayer(layer,dir,width,suffix){
 
       createFolderAtPath(path);
 
-      // var isEnd = path.endsWith("\/");
-      // var isEnd2 = path.endsWith("/");
-
-      // log(" path "+path+" isEnd "+isEnd+","+isEnd2);
-
-      //  if(isEnd == false){
-
-      //    path += "\/";
-
-      //     log("checkExportDir add splite2 "+path+","+path.endsWith("\/"));
-      //  }
 
        path += "/"+suffix;
 
@@ -376,20 +348,9 @@ function exportAndroidIcon(layer){
 
  var onSetting = function onSetting(context){
   log("onSetting7");
-  context.document.showMessage("show setting6");
+  
 
 
-//      var template1="我是{0}，今年{1}了";
-//  var template2="我是{name}，今年{age}了";
-//  var result1=template1.format("loogn",22);
-//  var result2=template2.format({name:"loogn",age:22});
-
-//  log(result1);
-// log(result1 + result2);
-
-  // log("hello onRun");
-
-  // context.document.showMessage("show setting");
 
   log("export222 "+I18N.LAETVERSION);
 
@@ -505,10 +466,10 @@ var otherInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,12,300,25));
          //log(@"save input xcode"+xcodeInput.stringValue())
         saveValues(userDefaults)  ;
 
-        //NSApplication.sharedApplication().displayDialog_withTitle_("result", xcodeInput.stringValue);
+        
     }
     else {
-       //NSApplication.sharedApplication().displayDialog_withTitle_("result2", androidInput.stringValue);
+       
     }
  }
 
