@@ -79,16 +79,26 @@ function exportScaleLayer(layer,dir,width,suffix){
       frame = [layer frame];
      var scale = width / [frame width];
 
-     var name2 = layer.name()+"-"+suffix+".png";
+     
 
+     if(typeof suffix == 'undefined'){
+      var name = layer.name()+".png";
 
+       var path = dir+"/"+ name;
 
+       log("exportScaleLayer "+path) ;
 
-     var path = dir+"/"+ name2;
+      exportLayerToPath(layer,path,scale,"png");
+    }
+    else{
+       var name2 = layer.name()+"-"+suffix+".png";
 
-     log("exportScaleLayer2 "+path)
+       var path = dir+"/"+ name2;
 
-     exportLayerToPath(layer,path,scale,"png","-"+suffix);
+       log("exportScaleLayer2 "+path)
+
+       exportLayerToPath(layer,path,scale,"png","-"+suffix);
+     }
         
      
 
@@ -337,7 +347,7 @@ function exportAndroidIcon(layer){
            
                   }
 
-             exportScaleLayer(layer,path,size,suffix);
+             exportScaleLayer(layer,path,size);
           }
 
 
