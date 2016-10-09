@@ -1,5 +1,4 @@
 @import 'common.js'
-@import 'i18n.js'
 
 var presets = {
         xcodeProjectPath: '/Users/Shared/AppIcon/Assets.xcassets',
@@ -15,8 +14,6 @@ var presets = {
 }   ;    
 
 //83.5-->167 iPad Pro
-
-var I18N = Resources.I18N;
 
 var doc,
     exportDir, 
@@ -37,38 +34,6 @@ var doc,
 
 
   var userDefaults = loadDefaults(presets);
-
-  /*
-    用法
-      var template1="我是{0}，今年{1}了";
- var template2="我是{name}，今年{age}了";
- var result1=template1.format("loogn",22);
- var result2=template2.format({name:"loogn",age:22});
- //两个结果都是"我是loogn，今年22了"
-  */
-
-    String.prototype.format = function(args) {
-    var result = this;
-    if (arguments.length > 0) {    
-        if (arguments.length == 1 && typeof (args) == "object") {
-            for (var key in args) {
-                if(args[key]!=undefined){
-                    var reg = new RegExp("({" + key + "})", "g");
-                    result = result.replace(reg, args[key]);
-                }
-            }
-        }
-        else {
-            for (var i = 0; i < arguments.length; i++) {
-                if (arguments[i] != undefined) {
-                    var reg = new RegExp("({[" + i + "]})", "g");
-                    result = result.replace(reg, arguments[i]);
-                }
-            }
-        }
-    }
-    return result;
-}
     
 
  function hasSuffix(str,suffix){
@@ -378,37 +343,25 @@ function exportAndroidIcon(layer){
   log("onSetting7");
   context.document.showMessage("show setting6");
 
-
-//      var template1="我是{0}，今年{1}了";
-//  var template2="我是{name}，今年{age}了";
-//  var result1=template1.format("loogn",22);
-//  var result2=template2.format({name:"loogn",age:22});
-
-//  log(result1);
-// log(result1 + result2);
-
   // log("hello onRun");
 
   // context.document.showMessage("show setting");
-
-  log("export222 "+I18N.LAETVERSION);
 
   log("userDefaults.xcodeProjectPath ="+userDefaults.xcodeProjectPath);
 
     var accessory = NSView.alloc().initWithFrame(NSMakeRect(0,0,300,320));
 
 
-  //var checkboxXCode = NSButton.alloc().initWithFrame(NSMakeRect(0,264,300,25));
-  var checkboxXCode = NSButton.alloc().initWithFrame(NSMakeRect(0,244,300,25));
+  var checkboxXCode = NSButton.alloc().initWithFrame(NSMakeRect(0,264,300,25));
     checkboxXCode.setButtonType(3);
-    checkboxXCode.title = 'Input XCode Assets.xcassets folder';
+    checkboxXCode.title = 'Input XCode Project (xcodeproj) folder';
     checkboxXCode.state =  userDefaults.exportXcode;
 
    
- // var textXcode = NSTextView.alloc().initWithFrame(NSMakeRect(0,244,300,20));
- //    textXcode.string = '( or drop you project or workspace file to here)';
- //    textXcode.drawsBackground = false;
- //    textXcode.editable = false;
+ var textXcode = NSTextView.alloc().initWithFrame(NSMakeRect(0,244,300,20));
+    textXcode.string = '( or drop you project or workspace file to here)';
+    textXcode.drawsBackground = false;
+    textXcode.editable = false;
 
 
    var xcodeInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,220,300,25));
@@ -433,18 +386,17 @@ function exportAndroidIcon(layer){
     checkboxAppleWatch.state =  userDefaults.exportAppleWatchIcon;
 
 
-   // var checkboxAndroid = NSButton.alloc().initWithFrame(NSMakeRect(0,124,300,25));
-    var checkboxAndroid = NSButton.alloc().initWithFrame(NSMakeRect(0,104,300,25));
+    var checkboxAndroid = NSButton.alloc().initWithFrame(NSMakeRect(0,124,300,25));
     checkboxAndroid.setButtonType(3);
     checkboxAndroid.title = 'Input Android Resource (res) folder';
     checkboxAndroid.state = userDefaults.exportAndroid;
 
 
 
-// var textAndroid = NSTextView.alloc().initWithFrame(NSMakeRect(0,104,300,20));
-//     textAndroid.string = '(or drop you AndroidManifest.xml file to here)';
-//     textAndroid.drawsBackground = false;
-//     textAndroid.editable = false;
+var textAndroid = NSTextView.alloc().initWithFrame(NSMakeRect(0,104,300,20));
+    textAndroid.string = '(or drop you AndroidManifest.xml file to here)';
+    textAndroid.drawsBackground = false;
+    textAndroid.editable = false;
 
    var androidInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,80,300,25));
     androidInput.stringValue = userDefaults.androidResPath;
@@ -462,13 +414,13 @@ var otherInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,12,300,25));
 
 
    accessory.addSubview(xcodeInput);
- //  accessory.addSubview(textXcode);
+   accessory.addSubview(textXcode);
    accessory.addSubview(checkboxOther);
    accessory.addSubview(checkboxIphone);
    accessory.addSubview(checkboxIpad);
    accessory.addSubview(checkboxAppleWatch);
    accessory.addSubview(androidInput);
- //   accessory.addSubview(textAndroid);
+    accessory.addSubview(textAndroid);
    accessory.addSubview(checkboxAndroid);
     accessory.addSubview(otherInput);
      accessory.addSubview(checkboxXCode);
