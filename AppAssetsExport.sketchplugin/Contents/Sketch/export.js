@@ -475,9 +475,9 @@ var otherInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,12,300,25));
 
 
     var alert = NSAlert.alloc().init();
-    alert.setMessageText('App Asset export directory');
-    alert.addButtonWithTitle('Save preferences');
-    alert.addButtonWithTitle('Cancel');
+   alert.setMessageText(I18N.EXPORT_DIRCTORY);
+    alert.addButtonWithTitle(I18N.SAVE_PREF);
+    alert.addButtonWithTitle(I18N.CANCEL);
      alert.setIcon(NSImage.alloc().initWithContentsOfFile(
       context.plugin.urlForResourceNamed('logo.png').path()));
     alert.setAccessoryView(accessory);
@@ -517,7 +517,7 @@ var otherInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,12,300,25));
       log("showText "+text);
     alert.setMessageText(text);
 
-    alert.addButtonWithTitle('Close');
+    alert.addButtonWithTitle(I18N.CLOSE);
     
      alert.setIcon(NSImage.alloc().initWithContentsOfFile(
       context.plugin.urlForResourceNamed('logo.png').path()));
