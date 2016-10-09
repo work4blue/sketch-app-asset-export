@@ -302,7 +302,7 @@ function exportIOSIcon(layer){
          }
 
 
-         exportInfo += "export iOS icon to "+ appIconSetPath +"\n";
+         exportInfo += I18N.EXPORT_IOS_ICON + appIconSetPath +"\n";
 
 
        imageContent = {
@@ -339,7 +339,7 @@ function exportStoreIcon(layer){
              exportScaleLayer(layer,appIconSetPath,size,suffix);
           }
 
-          exportInfo += "export store icon to "+ appIconSetPath +"\n";
+          exportInfo += I18N.EXPORT_STORE_ICON+ appIconSetPath +"\n";
 
 
 
@@ -369,7 +369,7 @@ function exportAndroidIcon(layer){
           }
 
 
-          exportInfo += "export Android icon to "+ appIconSetPath +"\n";
+          exportInfo += I18N.EXPORT_ANDROID_ICON+ appIconSetPath +"\n";
 
 
  }
@@ -559,14 +559,14 @@ var onExportIcon = function onExportIcon(context,userDefaults)
          
     
         if(exportInfo == "")
-            doc.showMessage("none icon export.");
+            doc.showMessage(I18N.NONE_ICON_EXPORT);
           else 
             showMultiText(context,exportInfo);
             //doc.showMessage(exportInfo);
 
       }
      else 
-        doc.showMessage("please select a layer to export.");
+        doc.showMessage(I18N.PLEASE_SELECT_LAYER);
 
 }
 
