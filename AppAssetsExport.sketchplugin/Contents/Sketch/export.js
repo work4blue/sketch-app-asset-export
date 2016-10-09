@@ -401,7 +401,7 @@ function exportAndroidIcon(layer){
   //var checkboxXCode = NSButton.alloc().initWithFrame(NSMakeRect(0,264,300,25));
   var checkboxXCode = NSButton.alloc().initWithFrame(NSMakeRect(0,244,300,25));
     checkboxXCode.setButtonType(3);
-    checkboxXCode.title = 'Input XCode Assets.xcassets folder';
+    checkboxXCode.title = I18N.INPUT_XCODE_FLODER;
     checkboxXCode.state =  userDefaults.exportXcode;
 
    
@@ -436,7 +436,7 @@ function exportAndroidIcon(layer){
    // var checkboxAndroid = NSButton.alloc().initWithFrame(NSMakeRect(0,124,300,25));
     var checkboxAndroid = NSButton.alloc().initWithFrame(NSMakeRect(0,104,300,25));
     checkboxAndroid.setButtonType(3);
-    checkboxAndroid.title = 'Input Android Resource (res) folder';
+    checkboxAndroid.title = I18N.INPUT_ANDROID_FLODER;
     checkboxAndroid.state = userDefaults.exportAndroid;
 
 
@@ -453,7 +453,7 @@ function exportAndroidIcon(layer){
 
       var checkboxOther = NSButton.alloc().initWithFrame(NSMakeRect(0,36,300,25));
     checkboxOther.setButtonType(3);
-    checkboxOther.title = 'Input open SDK icon directory';
+    checkboxOther.title = I18N.INPUT_STORE_FLODER;
    checkboxOther.state = userDefaults.exportOther;
 
 var otherInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,12,300,25));
