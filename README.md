@@ -1,4 +1,4 @@
-#Sketch Plugin:App Asset export 
+#Sketch Plug:App Asset export 
 
 Sketch3 plugin, One key export Android/iOS App icons.
 
@@ -20,14 +20,18 @@ Export various size icons for Android / iOS / iPhone App.
 ## Result:
 
 1.  iOS AppIcon.xcassets
+
 ![Alt text](./1476017899600.png)
 <br>
 2.  Android Icon
 <br>
+
 ![Alt text](./1476018341670.png)
 3. App Store Icon
-![Alt text](./1476018548285.png)
 <br>
+![Alt text](./1476018548285.png)
+
+
 #中文版说明 
 
 App Asset Export ,Sketch 插件,一键输出生成Android/iOS/iPhone App 所需各种尺寸图标.
@@ -117,9 +121,9 @@ Android 中会自动生成相应drawable目录,并将同名图标按要求放入
 
 + Icons for Android Apps
 
-<br>
-参考  https://www.creativefreedom.co.uk/icon-designers-blog/android-4-1-icon-size-guide-made-simple/
 
+参考  https://www.creativefreedom.co.uk/icon-designers-blog/android-4-1-icon-size-guide-made-simple/
+<br>
 
 | 分辨率名称      |   图标尺寸 |  缩放比例 | 
 | :--------      | --------:| 
