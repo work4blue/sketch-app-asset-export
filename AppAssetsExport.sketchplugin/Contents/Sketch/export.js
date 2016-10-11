@@ -284,7 +284,7 @@ function exportIOSIcon(layer){
          }
 
 
-         exportInfo += I18N.EXPORT_IOS_ICON + appIconSetPath +"\n";
+         exportInfo += I18N.EXPORT_IOS_ICON + appIconSetPath +"\n\n";
 
 
        imageContent = {
@@ -321,7 +321,7 @@ function exportStoreIcon(layer){
              exportScaleLayer(layer,appIconSetPath,size,suffix);
           }
 
-          exportInfo += I18N.EXPORT_STORE_ICON+ appIconSetPath +"\n";
+          exportInfo += I18N.EXPORT_STORE_ICON+ appIconSetPath +"\n\n";
 
 
 
@@ -351,7 +351,7 @@ function exportAndroidIcon(layer){
           }
 
 
-          exportInfo += I18N.EXPORT_ANDROID_ICON+ appIconSetPath +"\n";
+          exportInfo += I18N.EXPORT_ANDROID_ICON+ appIconSetPath +"\n\n";
 
 
  }

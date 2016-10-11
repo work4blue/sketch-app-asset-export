@@ -24,9 +24,9 @@ var Resources = {
       },
       'en': {
         'language': 'en',
-        'EXPORT_IOS_ICON': 'export iOS icon to ',
-        'EXPORT_ANDROID_ICON': 'export Android icon to ',
-        'EXPORT_STORE_ICON': 'export App Store icon to ',
+        'EXPORT_IOS_ICON': 'export iOS icons to ',
+        'EXPORT_ANDROID_ICON': 'export Android icons to ',
+        'EXPORT_STORE_ICON': 'export App Store icons to ',
         'INPUT_XCODE_FLODER':'Input XCode Assets.xcassets folder',
         'INPUT_ANDROID_FLODER':'Input Android Resource (res) folder',
         'INPUT_STORE_FLODER':' Input app store icon directory',
