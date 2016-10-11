@@ -1,6 +1,6 @@
 {
    "name": "App  Assets Export",
-  "description": "Export App property's all assets to XCode Images.xcassets and Android res folder, and commit git repo.",
+  "description": "One key to export Android/iOS App icons.",
   "author": "Andrew Huang",
   "homepage": "https://github.com/work4blue/sketch-app-asset-export",
   "version": "1.0.0",
