@@ -22,13 +22,13 @@ Export various size icons for Android / iOS / iPhone App.
 1.  iOS AppIcon.xcassets
 
 ![Alt text](./1476017899600.png)
-<br>
+
 2.  Android Icon
-<br>
 
 ![Alt text](./1476018341670.png)
+
 3. App Store Icon
-<br>
+
 ![Alt text](./1476018548285.png)
 
 
@@ -123,10 +123,11 @@ Android 中会自动生成相应drawable目录,并将同名图标按要求放入
 
 
 参考  https://www.creativefreedom.co.uk/icon-designers-blog/android-4-1-icon-size-guide-made-simple/
-<br>
+
+
 
 | 分辨率名称      |   图标尺寸 |  缩放比例 | 
-| :--------      | --------:| 
+| :--------      | :--------:| :--------:| 
 | LDPI    |   36 x 36 |   | 
 | MDPI    |   48 x 48 |  1x |  
 | HDPI    |   72 x 72 |  1.5x |  
