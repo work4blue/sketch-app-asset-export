@@ -25,9 +25,9 @@ var doc,
     defalutPath = "/Users/Shared/AppIcon",
     currentLayer,
     iOSSuffixArray = ["60@2x","60@3x","76","76@2x","Small-40","Small-40@2x",
-                          "Small-40@3x","Small","Small@2x","Small@3x","83.5@2x"],
-    iOSSizeArray = [ 120,180,76,152,40,80,120,29,58,87,167],
-    iOSBaseArray = [ 60,60,76,76,40,40,40,29,29,29,83.5],
+                          "Small-40@3x","Small","Small@2x","Small@3x","83.5@2x","20","20@2x","20@3x"],
+    iOSSizeArray = [ 120,180,76,152,40,80,120,29,58,87,167,20,40,60],
+    iOSBaseArray = [ 60,60,76,76,40,40,40,29,29,29,83.5,20,20,20],
 
     androidDirArray = ["ldpi","mdpi","hdpi","xhdpi","xxhdpi","xxxhdpi"],
     androidSizeArray = [ 36,48,72,96,144,192],
@@ -220,6 +220,8 @@ function findImage(imagesArray,filename){
 function exportIphoneContentJson(layer,imagesArray){
    var name = layer.name();
 
+   addIconContent(imagesArray,name,"20@2x",0);
+   addIconContent(imagesArray,name,"20@3x",0);
    addIconContent(imagesArray,name,"Small",0); //Small
    addIconContent(imagesArray,name,"Small@2x",0); 
    addIconContent(imagesArray,name,"Small@3x",0); 
@@ -237,6 +239,9 @@ function exportIphoneContentJson(layer,imagesArray){
 
 function exportIpadContentJson(layer,imagesArray){
    var name = layer.name();
+
+    addIconContent(imagesArray,name,"20",1);
+    addIconContent(imagesArray,name,"20@2x",1);
 
     addIconContent(imagesArray,name,"Small-40",1); 
     addIconContent(imagesArray,name,"Small-40@2x",1); 

@@ -1,9 +1,11 @@
 #Sketch Plugin:App Asset export 
 
-Sketch3 plugin, One key export Android/iOS App icons.
+Sketch3 plugin, One key to export Android/iOS App icons.
 
 Export various size icons for Android / iOS / iPhone App.
 
+##history
+ver 1.0.1 (2016/10/25) add new Image Sizes in XCode 8 (iOS 10) 
 
 ##Guide
 
@@ -21,7 +23,8 @@ Export various size icons for Android / iOS / iPhone App.
 
 1  iOS AppIcon.xcassets
 
-![Alt text](./1476017899600.png)
+![Alt text](./1477389182544.png)
+
 
 2 Android Icon
 
@@ -75,7 +78,7 @@ App Asset Export ,Sketch 插件,一键输出生成Android/iOS/iPhone App 所需�
 
 
 如下是由本插件自动生成图标描述文件效果,可以看到所有要求到尺寸均可
-![Alt text](./1476017899600.png)
+![Alt text](./1477389182544.png)
 
 而传统的方式,是Sketch设计师输出图标,然后开发者工程师在Xcode 逐一拖入图标asset生成器中,而且如果拖入尺寸与对应机型要求图标尺寸不一致还是收到编译警告,部分情况下还会造成编译错误.整个过程相当繁琐.
 
@@ -105,6 +108,8 @@ Android 中会自动生成相应drawable目录,并将同名图标按要求放入
 | AppIcon-Small-40@3x.png     |   120x120 | Spotlight on iPhone 6 Plus |  
 | AppIcon-60@2x.png    |   120x120 | Home screen on iPhone/iPod Touch with retina display | 
 | AppIcon-60@3x.png    |   180x180 | Home screen on iPhone 6 Plus | 
+| AppIcon-20@2x.png    |   40x40 | iPhone Notification iOS 7-10  with retina display| 
+| AppIcon-20@3x.png    |   60x60 | iPhone Notification iOS 7-10 on iPhone 6 Plus| 
 
 +  Icons for iPad-only Apps
 <br>
@@ -118,6 +123,8 @@ Android 中会自动生成相应drawable目录,并将同名图标按要求放入
 | AppIcon-83.5@2x.png    |   177x177 | Home screen on iPadPro  | 
 | AppIcon-Small.png    |   29x29 | Settings on iPad  | 
 | AppIcon-Small@2x.png    |  58x58 | Settings on iPad with retina display  | 
+| AppIcon-20.png    |  20x40 | iPad Notifications iOS 7-10   |
+| AppIcon-20@2x.png    |  40x40 | iPad Notifications iOS 7-10   with retina display|
 
 + Icons for Android Apps
 
@@ -154,5 +161,11 @@ Android 中会自动生成相应drawable目录,并将同名图标按要求放入
    
       有五种分别是
        90x90, 136x136,168x168,192x192, 224x224,       
+
+图标资源
+
+https://github.com/opoloo/androidicons
+
+https://github.com/google/material-design-icons
  
 
