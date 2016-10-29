@@ -5,7 +5,7 @@
   "homepage": "https://github.com/work4blue/sketch-app-asset-export",
   "version": "1.0.1",
   "identifier": "cn.bluedrum.sketch-app-aasset-export",
-  "compatibleVersion": "1.0.1",
+  "compatibleVersion": "1.0.2",
   "bundleVersion": 1,
 
     "commands" : [

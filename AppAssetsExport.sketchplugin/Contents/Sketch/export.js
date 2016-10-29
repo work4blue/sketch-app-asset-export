@@ -11,7 +11,12 @@ var presets = {
         exportIphoneIcon:1,
         exportIpadIcon:0,
         exportAppleWatchIcon:0,
-        exportMacIcon:0
+        exportMacIcon:0,
+        desktopAppPath: '/Users/Shared/AppIcon/DesktopApp',
+        exportDesktopApp:0,
+        exportWinIco:0,
+        exportMacIcns:0,
+        exportWebFav:0,
 }   ;    
 
 //83.5-->167 iPad Pro
@@ -371,42 +376,72 @@ function exportAndroidIcon(layer){
 
   log("userDefaults.xcodeProjectPath ="+userDefaults.xcodeProjectPath);
 
-    var accessory = NSView.alloc().initWithFrame(NSMakeRect(0,0,300,320));
+    var accessory = NSView.alloc().initWithFrame(NSMakeRect(0,0,300,340));
+
+
+    var checkboxDesktop = NSButton.alloc().initWithFrame(NSMakeRect(0,295,300,25));
+    checkboxDesktop.setButtonType(3);
+    checkboxDesktop.title = I18N.INPUT_DESKTOP_APP_FLODER;
+    checkboxDesktop.state =  userDefaults.exportDesktopApp;
+
+  
+
+   var desktopAppInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,270,300,25));
+    desktopAppInput.stringValue = userDefaults.desktopAppPath;
+    desktopAppInput.editable = true;
+    //desktopAppInput.placeholder="Drop you project or workspace file to here"
+
+
+    var checkboxWinIco = NSButton.alloc().initWithFrame(NSMakeRect(20,246,300,25));
+    checkboxWinIco.setButtonType(3);
+    checkboxWinIco.title = 'Win Ico';
+    checkboxWinIco.state =  userDefaults.exportWinIco;
+
+    var checkboxMacIcns = NSButton.alloc().initWithFrame(NSMakeRect(100,246,300,25));
+    checkboxMacIcns.setButtonType(3);
+    checkboxMacIcns.title = 'Mac Icns';
+    checkboxMacIcns.state =  userDefaults.exportMacIcns;
+
+    var checkboxWebFav = NSButton.alloc().initWithFrame(NSMakeRect(180,246,300,25));
+    checkboxWebFav.setButtonType(3);
+    checkboxWebFav.title = 'Web Favicon';
+    checkboxWebFav.state =  userDefaults.exportWebFav;
+
 
 
   //var checkboxXCode = NSButton.alloc().initWithFrame(NSMakeRect(0,264,300,25));
-  var checkboxXCode = NSButton.alloc().initWithFrame(NSMakeRect(0,244,300,25));
+  var checkboxXCode = NSButton.alloc().initWithFrame(NSMakeRect(0,199,300,25));
     checkboxXCode.setButtonType(3);
     checkboxXCode.title = I18N.INPUT_XCODE_FLODER;
     checkboxXCode.state =  userDefaults.exportXcode;
 
-   
- // var textXcode = NSTextView.alloc().initWithFrame(NSMakeRect(0,244,300,20));
- //    textXcode.string = '( or drop you project or workspace file to here)';
- //    textXcode.drawsBackground = false;
- //    textXcode.editable = false;
+  
 
-
-   var xcodeInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,220,300,25));
+   var xcodeInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,175,300,25));
     xcodeInput.stringValue = userDefaults.xcodeProjectPath;
     xcodeInput.editable = true;
     xcodeInput.placeholder="Drop you project or workspace file to here"
 
 
-    var checkboxIphone = NSButton.alloc().initWithFrame(NSMakeRect(20,192,300,25));
+    var checkboxIphone = NSButton.alloc().initWithFrame(NSMakeRect(20,147,300,25));
     checkboxIphone.setButtonType(3);
     checkboxIphone.title = 'iPhone';
     checkboxIphone.state =  userDefaults.exportIphoneIcon;
 
-    var checkboxIpad = NSButton.alloc().initWithFrame(NSMakeRect(100,192,300,25));
+    var checkboxIpad = NSButton.alloc().initWithFrame(NSMakeRect(100,147,300,25));
     checkboxIpad.setButtonType(3);
     checkboxIpad.title = 'iPad';
     checkboxIpad.state =  userDefaults.exportIpadIcon;
 
-    var checkboxAppleWatch = NSButton.alloc().initWithFrame(NSMakeRect(180,192,300,25));
+    var checkboxAppleWatch = NSButton.alloc().initWithFrame(NSMakeRect(180,147,300,25));
     checkboxAppleWatch.setButtonType(3);
     checkboxAppleWatch.title = 'Apple Watch';
     checkboxAppleWatch.state =  userDefaults.exportAppleWatchIcon;
+
+
+
+
+
 
 
    // var checkboxAndroid = NSButton.alloc().initWithFrame(NSMakeRect(0,124,300,25));
@@ -436,6 +471,12 @@ var otherInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,12,300,25));
     otherInput.stringValue = userDefaults.otherPath;
     otherInput.editable = true;
 
+
+   accessory.addSubview(checkboxDesktop);
+   accessory.addSubview(desktopAppInput);
+   accessory.addSubview(checkboxWinIco);
+   accessory.addSubview(checkboxMacIcns);
+   accessory.addSubview(checkboxWebFav);
 
    accessory.addSubview(xcodeInput);
  //  accessory.addSubview(textXcode);

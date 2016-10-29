@@ -6,6 +6,7 @@ var Resources = {
     var I18N = {
       'zh-cn': {
         'language': 'cn',
+        'INPUT_DESKTOP_APP_FLODER':'输入桌面应用图标目录',
         'EXPORT_IOS_ICON': '导出iOS图标到',
         'EXPORT_ANDROID_ICON': '导出Android图标到',
         'EXPORT_STORE_ICON': '输出应用市场图标到',
@@ -24,13 +25,14 @@ var Resources = {
       },
       'en': {
         'language': 'en',
+        'INPUT_DESKTOP_APP_FLODER':'Input Desktop App folder',
         'EXPORT_IOS_ICON': 'export iOS icons to ',
         'EXPORT_ANDROID_ICON': 'export Android icons to ',
         'EXPORT_STORE_ICON': 'export App Store icons to ',
         'INPUT_XCODE_FLODER':'Input XCode Assets.xcassets folder',
         'INPUT_ANDROID_FLODER':'Input Android Resource (res) folder',
-        'INPUT_STORE_FLODER':' Input app store icon directory',
-        'EXPORT_DIRCTORY':'App Asset export directory',
+        'INPUT_STORE_FLODER':' Input app store icon folder',
+        'EXPORT_DIRCTORY':'App Asset export folder',
         'CANCEL':'Cancel',
         'CLOSE':'Close',
         'SAVE_PREF':'Save preferences',
