@@ -1,5 +1,6 @@
 @import 'common.js'
 @import 'i18n.js'
+@import 'icon-generator.js'
 
 var presets = {
         xcodeProjectPath: '/Users/Shared/AppIcon/Assets.xcassets',
@@ -39,6 +40,9 @@ var doc,
 
      storeSuffixArray = [ "iTunesArtwork","iTunesArtwork@2x","GooglePlay","mi-90","mi-136","mi-168","mi-192","mi-224","qq-16","qq-512"],
       storeSizeArray = [ 512,1024,512,90,136,168,192,224,16,512];
+
+      macSuffixArray = ["16x16","16x16@2x","32x32","32x32@2x","128x128","128x128@2x","256x256","256x256@2x","512x512","512x512@2x"];
+      macSizeArray = [16,32,32,64,128,256,256,512,512,1024];
 
 
   var userDefaults = loadDefaults(presets);
@@ -366,6 +370,65 @@ function exportAndroidIcon(layer){
 
  }
 
+
+
+ function exportMacIcns(layer){
+
+    checkExportDir(userDefaults.desktopAppPath, layer.name()+".iconset");
+
+    var path = userDefaults.desktopAppPath + "/" + layer.name()+".iconset";
+
+     for(var i=0; i< macSuffixArray.length;i++){
+
+            
+
+             var suffix = macSuffixArray[i];
+             var size = macSizeArray[i];
+
+              var name2 = "icon_"+suffix+".png";
+             var scale = size / [[layer frame] width];
+             
+               exportLayerToPath(layer,path+"/"+ name2,scale,"png","-"+suffix);
+          }
+
+     //调用 icoutil 进行转换
+     var convertTask = [[NSTask alloc] init];
+     //convertTask.setLaunchPath("/bin/bash");
+     //iconutil -c icon.icns <path to .iconset file>
+     var convertIcns = "/usr/bin/iconutil -c icns  \""+ path+"\" -o \"" +userDefaults.desktopAppPath +"/"+layer.name()+".icns\""; 
+
+     log("exportMacIcns "+convertIcns);
+
+      [convertTask setLaunchPath:@"/bin/bash"]
+      [convertTask setArguments:["-c", convertIcns]]
+      [convertTask launch]
+      [convertTask waitUntilExit]
+
+      if ([convertTask terminationStatus] == 0){
+        log("export icns success");
+      }
+   
+
+ }
+
+ function  exportDesktopIcon(layer){
+    
+    
+    if(userDefaults.exportWinIco == 1){
+
+    }
+
+   if(userDefaults.exportMacIcns == 1){
+        //checkExportDir(userDefaults.desktopAppPath,"iconset");
+        exportMacIcns(layer);
+    }
+
+     if(userDefaults.exportWebFav == 1){
+
+    }
+
+ }
+
  var onSetting = function onSetting(context){
   log("onSetting7");
   
@@ -504,6 +567,14 @@ var otherInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,12,300,25));
 
      if (responseCode === 1000) {
 
+      
+
+         userDefaults.desktopAppPath = desktopAppInput.stringValue();
+         userDefaults.exportDesktopApp = checkboxDesktop.state();
+         userDefaults.exportWinIco = checkboxWinIco.state();
+         userDefaults.exportMacIcns = checkboxMacIcns.state();
+         userDefaults.exportWebFav = checkboxWebFav.state();
+
          userDefaults.xcodeProjectPath = xcodeInput.stringValue();
          userDefaults.androidResPath = androidInput.stringValue();
          userDefaults.otherPath = otherInput.stringValue();
@@ -564,6 +635,11 @@ var onExportIcon = function onExportIcon(context,userDefaults)
          var layer =    selection.firstObject();
 
          log("exportOther ="+userDefaults.exportOther.intValue());
+
+         if(userDefaults.exportDesktopApp ==1)    
+               exportDesktopIcon(layer);
+
+        //exportMacIcns(layer);
 
         if(userDefaults.exportOther ==1)  
             exportStoreIcon(layer);
