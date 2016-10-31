@@ -7,6 +7,8 @@ Export various size icons for Android / iOS / iPhone App.
 ##history
 ver 1.0.1 (2016/10/25) add new Image Sizes in XCode 8 (iOS 10) 
 
+ver 1.0.2 (2016/10/31) export  Mac ICNS
+
 ##Guide
 
 1. Create a 1024x1024 size layer for Icon design.
