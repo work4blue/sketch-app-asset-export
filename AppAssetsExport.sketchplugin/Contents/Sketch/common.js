@@ -30,49 +30,7 @@ var app = [NSApplication sharedApplication],
 //  Parse Context - Sketch 3.3 onwards
 //--------------------------------------
 
-function test(context){
-	var doc = context.document;
 
-  var selection = context.selection;
-
-  selectedLayers = selection;
-
-  log("onExport2");
-
-   if(selectedLayers.count() >0){
-        //doc.currentPage().deselectAllLayers();
-         var layer = selectedLayers[0];
-             layer.setIsSelected(true);
-
-         var path =  "/Users/pro/Documents/app2.png";
-
-      var scale = 1;
-      var rect = layer.absoluteRect().rect();
-//var rect =  NSMakeRect(0, 0, 256, 256);
-
-       var	slice = [MSExportRequest requestWithRect:rect scale:scale]
-
-         
-
-          log("slice "+slice);
-
-			var layerName = layer.name() + ((typeof suffix !== 'undefined') ? suffix : ""),
-			format = (typeof format !== 'undefined') ? format : "png";
-
-		slice.setShouldTrim(0)
-		slice.setSaveForWeb(1)
-		slice.configureForLayer(layer)
-		slice.setName(layerName)
-		slice.setFormat(format)
-		doc.saveArtboardOrSlice_toFile(slice, path)
-
-		log("export "+path);
-
-      
-          doc.showMessage(" export4  " + layer.name() + " to path "+path)   ;
-
-   }
-}
 
 function parseContext(context, remote) {
 	if(typeof remote !== 'undefined') isRemote = remote;
@@ -713,7 +671,34 @@ function removeExportOptions(layer) {
 }
 
 function exportLayerToPath(layer, path, scale, format, suffix) {
+     if(getSketchVersionNumber() >= 410) {
 
+     	scale = (typeof scale !== 'undefined') ? scale : 1,
+		suffix = (typeof suffix !== 'undefined') ? suffix : "",
+		format = (typeof format !== 'undefined') ? format : "png"
+
+     	
+           
+            slice = MSExportRequest.exportRequestsFromExportableLayer(layer).firstObject(),
+            savePathName = [];
+
+        slice.scale = scale;
+        slice.format = format;
+
+        
+        doc.saveArtboardOrSlice_toFile(slice, path);
+
+        var rect = layer.absoluteRect().rect()
+
+        return {
+		    x: Math.round(rect.origin.x),
+		    y: Math.round(rect.origin.y),
+		    width: Math.round(rect.size.width),
+		    height: Math.round(rect.size.height)
+		}
+
+     }
+    
 	if(getSketchVersionNumber() >= 350) {
 
 		var rect = layer.absoluteRect().rect(),

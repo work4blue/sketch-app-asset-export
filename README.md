@@ -1,13 +1,20 @@
 #Sketch Plugin:App Asset export 
 
-Sketch3 plugin, One key to export Android/iOS App icons.
+Sketch plugin, One key to export Android/iOS App icons.
 
 Export various size icons for Android / iOS / iPhone App.
 
 ##history
+
+ver 1.04 (2017/2/14) fixed can't export image in Sketch 42.
+ver 1.03 (2017/1/12) fixed Android's icon file name  to lowcase.
+         
+ver 1.0.2 (2016/10/26) export  Mac ICNS
 ver 1.0.1 (2016/10/25) add new Image Sizes in XCode 8 (iOS 10) 
 
-ver 1.0.2 (2016/10/31) export  Mac ICNS
+
+
+
 
 ##Guide
 
@@ -164,10 +171,30 @@ Android 中会自动生成相应drawable目录,并将同名图标按要求放入
       有五种分别是
        90x90, 136x136,168x168,192x192, 224x224,       
 
-图标资源
+UI参数资源
+https://developer.apple.com/ios/human-interface-guidelines/
 
+https://beta.wikiversity.org/wiki/Topic:UI%E8%AE%BE%E8%AE%A1/%E7%A7%BB%E5%8A%A8%E5%BA%94%E7%94%A8
 https://github.com/opoloo/androidicons
 
 https://github.com/google/material-design-icons
  
+ http://www.idev101.com/code/User_Interface/sizes.html
+
+##bug:
+
+### sketch 42 出错
+
+```
+默认	18:32:51.353818 +0800	Sketch	userDefaults.xcodeProjectPath =/Users/pro/Documents/tmpIcon
+默认	18:32:51.354247 +0800	Sketch	exportOther =1
+默认	18:32:51.355091 +0800	Sketch	checkExportDir2 /Users/pro/Documents/tmpIcon/appicon.iconset
+默认	18:32:51.355310 +0800	Sketch	checkExportDir /Users/pro/Documents/tmpIcon/appicon.iconset
+默认	18:32:51.358311 +0800	Sketch	Exception: TypeError: MSExportRequest.requestWithRect_scale_ is not a function. (In 'MSExportRequest.requestWithRect_scale_( rect  ,scale)', 'MSExportRequest.requestWithRect_scale_' is undefined)
+默认	18:32:51.358435 +0800	Sketch	TypeError: MSExportRequest.requestWithRect_scale_ is not a function. (In 'MSExportRequest.requestWithRect_scale_( rect  ,scale)', 'MSExportRequest.requestWithRect_scale_' is undefined)
+line: 832
+sourceURL: /Users/pro/Library/Application Support/com.bohemiancoding.sketch3/Plugins/AppAssetsExport.sketchplugin/Contents/Sketch/export.js
+column: 50
+
+```
 

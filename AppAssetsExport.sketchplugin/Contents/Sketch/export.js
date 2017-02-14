@@ -82,7 +82,7 @@ var doc,
 
 
 
-
+//lowcast : file name  to 
 function exportScaleLayer(layer,dir,width,suffix){
      
       frame = [layer frame];
@@ -93,7 +93,9 @@ function exportScaleLayer(layer,dir,width,suffix){
      if(typeof suffix == 'undefined'){
       var name = layer.name()+".png";
 
-       var path = dir+"/"+ name;
+       var path = dir+"/" + name.toLowerCase();
+
+        
 
        log("exportScaleLayer "+path) ;
 
@@ -102,7 +104,9 @@ function exportScaleLayer(layer,dir,width,suffix){
     else{
        var name2 = layer.name()+"-"+suffix+".png";
 
-       var path = dir+"/"+ name2;
+       var path =  dir+"/"+ name2;; 
+
+        
 
        log("exportScaleLayer2 "+path)
 
@@ -144,12 +148,12 @@ function exportScaleLayer(layer,dir,width,suffix){
 
        createFolderAtPath(path);
 
-       log("checkExportDir2 "+path); 
+       log("checkExportDir5 "+path+",num="+getSketchVersionNumber()); 
     }
 
     appIconSetPath = path;
 
-    log("checkExportDir "+path);
+    log("checkExportDir4 "+path);
  }
 
 
@@ -274,16 +278,18 @@ function exportWatchContentJson(layer,imagesArray){
 function exportIOSIcon(layer){
    //var tmpDir =  "/Users/pro/Documents/AppIcon";
 
-       checkExportDir(userDefaults.xcodeProjectPath,"AppIcon.appiconset");
+   log("exportIOSIcon 11"+getSketchVersionNumber());
+
+      checkExportDir(userDefaults.xcodeProjectPath,"AppIcon.appiconset");
    
 
-   
+
 
           //输出所需图片
           var imagesArray = [];
           currentLayer = layer;
 
-       
+        log("exportIOSIcon 1");
 
 
         if(userDefaults.exportIpadIcon == 1)
@@ -292,6 +298,8 @@ function exportIOSIcon(layer){
             exportIpadContentJson(layer,imagesArray);
 
          }
+
+         log("exportIOSIcon 2");
          
          if(userDefaults.exportIphoneIcon ==1){
              exportIphoneContentJson(layer,imagesArray);
@@ -310,20 +318,62 @@ function exportIOSIcon(layer){
       }
 
 
+      log("exportIOSIcon 3");
       var filePath = appIconSetPath + "/Contents.json"
       log("json file2 "+filePath);
       var jsonString = stringify(imageContent, true)  
+
+       log("exportIOSIcon 4");
           writeTextToFile(jsonString, filePath)
+
+           log("exportIOSIcon 5");
+}
+
+  function createGroup(mask){
+   var group = [[mask parentGroup] addLayerOfType: 'group'];
+    [group setName: groupName];
+   copyLayerSize(mask, group);
+    copyLayerPosition(mask, group); 
+    return group;
+ }
+
+  function createMask(group, layer){
+    var parentGroup = [layer parentGroup],
+       newLayer = [layer duplicate];
+     //clone
+     [parentGroup removeLayer:newLayer];
+    [group addLayer: newLayer];
+     [parentGroup removeLayer: layer];
+ 
+    //Set as mask
+    [newLayer setName:"mask"]
+    [newLayer setHasClippingMask: true];
+     
+     [[newLayer frame] setX:0];
+    [[newLayer frame] setY:0];
+ 
+    return layer;
+   }
+
+function exportMiniAppsIcon(layer,path){
+
+  log("exportMiniAppsIcon2 "+path ); //MSOvalShape
+   //exportScaleLayer(layer,path,200,"miniapps");
+
+//https://github.com/bomberstudios/Sketch-Notebook/blob/master/library/notebook.js
+
 }
 
 function exportStoreIcon(layer){
        
-
+        
 
           checkExportDir(userDefaults.otherPath,"store");
 
-         
-         
+          log("exportStoreIcon3 "+appIconSetPath);
+
+         // exportScaleLayer(layer,appIconSetPath,200,"miniapps");
+         exportMiniAppsIcon(layer,appIconSetPath);
 
             for(var i=0; i< storeSuffixArray.length;i++){
 
@@ -334,6 +384,8 @@ function exportStoreIcon(layer){
 
              exportScaleLayer(layer,appIconSetPath,size,suffix);
           }
+
+
 
           exportInfo += I18N.EXPORT_STORE_ICON+ appIconSetPath +"\n\n";
 
@@ -598,6 +650,11 @@ var otherInput = NSTextField.alloc().initWithFrame(NSMakeRect(0,12,300,25));
     else {
        
     }
+ }
+
+
+ function exportMiniAppsIcon(context,text){
+
  }
 
  function showMultiText(context,text){
