@@ -89,7 +89,7 @@ var layer = selection.firstObject();
     // layer.frame().midX = midX;
     // layer.frame().midY = midY;
 
-      var rect = layer.absoluteRect().rect();
+      var rect = absoluteRectForLayer(layer)
 //var rect =  NSMakeRect(0, 0, 256, 256);
 
        var  slice = [MSExportRequest requestWithRect:rect scale:scale]

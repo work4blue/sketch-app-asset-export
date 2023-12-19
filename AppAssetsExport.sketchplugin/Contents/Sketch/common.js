@@ -688,7 +688,7 @@ function exportLayerToPath(layer, path, scale, format, suffix) {
         
         doc.saveArtboardOrSlice_toFile(slice, path);
 
-        var rect = layer.absoluteRect().rect()
+        var rect = absoluteRectForLayer(layer)
 
         return {
 		    x: Math.round(rect.origin.x),
@@ -701,7 +701,7 @@ function exportLayerToPath(layer, path, scale, format, suffix) {
     
 	if(getSketchVersionNumber() >= 350) {
 
-		var rect = layer.absoluteRect().rect(),
+		var rect = absoluteRectForLayer(layer)
 			slice = [MSExportRequest requestWithRect:rect scale:scale],
 			layerName = layer.name() + ((typeof suffix !== 'undefined') ? suffix : ""),
 			format = (typeof format !== 'undefined') ? format : "png";
@@ -1294,3 +1294,17 @@ function saveValue(key, value) {
 
 
 
+function absoluteRectForLayer(layer) {
+	if (getSketchVersionNumber() >= 960) {
+		// 适配v96之后的代码逻辑
+		//https://forum.sketch.com/t/absoluteinfluencerect-removed-in-sketch-96/1031
+		// https://forum.sketch.com/t/property-absoluterect-is-removed-on-app-v97/1176/2
+		// NOTE: the code below assumes that `layer` is anything but MSPage instance
+		let parent = layer.parentObject()
+		let relativeRect = layer.frame().rect()
+		return parent.convertRect_toCoordinateSpace_(relativeRect, /* to absolute/page coordinates */nil)
+	  } else {
+		// 适配v96之前的代码逻辑
+		return layer.absoluteRect().rect()
+	  }
+}

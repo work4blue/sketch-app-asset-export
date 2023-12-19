@@ -3,10 +3,10 @@
   "description": "One key to export Android/iOS App icons.",
   "author": "Andrew Huang",
   "homepage": "https://github.com/work4blue/sketch-app-asset-export",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "identifier": "cn.bluedrum.sketch-app-aasset-export",
-  "compatibleVersion": "1.0.4",
-  "bundleVersion": 4,
+  "compatibleVersion": "1.0.5",
+  "bundleVersion": 5,
 
     "commands" : [
        {
